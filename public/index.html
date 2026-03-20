@@ -558,8 +558,51 @@ function recalculateAll() {
 }
 
 // ═══════════════════════════════════════
-//  홍보 문구 생성 (멀티 상품)
+//  홍보 문구 생성 (100자 이내 엄수)
 // ═══════════════════════════════════════
+
+// 시즌/유행 문구 풀 (월별)
+function getSeasonCopy(date) {
+  const month = new Date(date).getMonth() + 1;
+  const pool = {
+    1:  ['새해 건강한 식탁', '겨울 보양식 특가', '신년맞이 알뜰 장보기'],
+    2:  ['설 명절 후 알뜰 특가', '겨울 끝자락 보양 특가', '입춘맞이 건강 식탁'],
+    3:  ['미세먼지 이기는 건강 식탁', '봄맞이 청정 먹거리 특가', '환절기 면역력 챙기세요'],
+    4:  ['봄나들이 간식 특가', '싱그러운 봄 식탁 준비', '벚꽃 시즌 특별 할인'],
+    5:  ['가정의 달 감사 특가', '초여름 입맛 살리기', '어버이날 건강 선물'],
+    6:  ['여름 준비 시원한 특가', '장마철 든든한 식탁', '무더위 이기는 보양 특가'],
+    7:  ['한여름 시원한 먹거리', '무더위 극복 건강 식탁', '여름 휴가 전 알뜰 장보기'],
+    8:  ['늦여름 건강 챙기세요', '가을 준비 알뜰 특가', '처서맞이 보양 식탁'],
+    9:  ['가을 식탁 풍성하게', '추석 준비 알뜰 특가', '선선한 가을 건강 식탁'],
+    10: ['가을 제철 먹거리 특가', '환절기 건강 챙기세요', '단풍 시즌 알뜰 장보기'],
+    11: ['겨울 준비 든든한 특가', '김장철 알뜰 장보기', '초겨울 따뜻한 식탁'],
+    12: ['연말 감사 특가', '겨울 보양식 특가', '크리스마스 특별 할인']
+  };
+  const copies = pool[month] || pool[3];
+  return copies[Math.floor(Math.random() * copies.length)];
+}
+
+function charLen(text) {
+  return text.replace(/\n/g, '').length;
+}
+
+// 상품명 목록을 100자에 맞게 축약
+function fitNames(items, maxLen) {
+  // 이름만 나열
+  const names = items.map(p => p.name);
+  let result = names.join(', ');
+  if (result.length <= maxLen) return result;
+
+  // 3개까지 시도
+  for (let count = Math.min(names.length, 3); count >= 1; count--) {
+    const short = names.slice(0, count).join(', ');
+    const more = items.length > count ? ` 외 ${items.length - count}종` : '';
+    result = short + more;
+    if (result.length <= maxLen) return result;
+  }
+  return `${items.length}종`;
+}
+
 function generatePromo() {
   const items = products.filter(p => p.calc);
   if (items.length === 0) return;
@@ -567,54 +610,87 @@ function generatePromo() {
   const date = document.getElementById('inputDate').value;
   const dateStr = formatDateKr(date);
   const maxDisc = Math.max(...items.map(p => Math.round(p.calc.totalDiscount * 100)));
+  const season = getSeasonCopy(date);
 
-  let promos;
+  let promos = [];
 
   if (items.length === 1) {
-    // 단일 상품
     const p = items[0];
     const disc = Math.round(p.calc.totalDiscount * 100);
     const salePrice = formatPrice(p.calc.saleSelling);
     const origPrice = formatPrice(p.sellingPrice);
-    const qtyText = p.qty ? `한정 ${p.qty}개` : '';
 
     promos = [
-      { type: 'RCS 문자 (버전 1)', text: `🔥[두레생협] 오늘만 특가!\n✨ ${p.name}\n💰 ${origPrice}원 → ${salePrice}원 (${disc}%↓)\n⏰ ${dateStr} 9시~19시${qtyText ? '\n📦 ' + qtyText + ', 서두르세요!' : ''}` },
-      { type: 'RCS 문자 (버전 2)', text: `🎁[두레생협] ${dateStr} 단 하루!\n🛒 ${p.name} ${disc}% 할인\n💵 ${origPrice}원 → ${salePrice}원\n⏰ 오전9시 오픈${p.qty ? ' · 선착순 ' + p.qty + '개' : ''}\n👉 놓치지 마세요!` },
-      { type: 'RCS 문자 (버전 3)', text: `✨[두레생협] 수요특가✨\n${p.name}\n💰 ${disc}% 할인 → ${salePrice}원\n📅 ${dateStr} 9시~19시${qtyText ? '\n🏃 ' + qtyText + ' 소진 시 종료' : ''}\n🛒 지금 바로 확인하세요!` },
-      { type: '앱 푸시', text: `🔥 ${p.name} ${disc}% 특가! 오늘 하루 ${salePrice}원 ⏰9시~19시` },
-      { type: '쇼핑몰 팝업', text: `🔥 오늘의 특판 🔥\n${p.name}\n💰 ${disc}% 할인 ${salePrice}원\n⏰ 오전 9시 ~ 저녁 7시` }
+      `🔥[두레생협] ${season}!\n✨${p.name}\n💰${origPrice}→${salePrice}원(${disc}%↓)\n⏰${dateStr} 9~19시 단하루`,
+      `🎁[두레생협] ${dateStr} 단하루!\n${p.name} ${disc}%할인\n💰${origPrice}→${salePrice}원\n🌿${season}`,
+      `✨[두레생협] 수요특가\n${p.name} ${disc}%↓\n💰${salePrice}원 ⏰9~19시\n🌱${season}`,
     ];
   } else {
-    // 멀티 상품
-    const itemList = items.map(p => {
-      const disc = Math.round(p.calc.totalDiscount * 100);
-      return `✨${p.name} ${disc}%↓ ${formatPrice(p.calc.saleSelling)}원`;
-    }).join('\n');
-
-    const shortList = items.slice(0, 3).map(p => `${p.name} ${Math.round(p.calc.totalDiscount * 100)}%↓`).join(', ');
-    const moreText = items.length > 3 ? ` 외 ${items.length - 3}종` : '';
+    const nameList = fitNames(items, 30);
 
     promos = [
-      { type: 'RCS 문자 (버전 1)', text: `🔥[두레생협] ${dateStr} 특가!\n최대 ${maxDisc}% 할인, ${items.length}종 한정 특판\n${itemList}\n⏰ 9시~19시, 서두르세요!` },
-      { type: 'RCS 문자 (버전 2)', text: `🎁[두레생협] 오늘만 단 하루!\n🛒 ${shortList}${moreText}\n💰 최대 ${maxDisc}% 할인\n⏰ ${dateStr} 오전9시 오픈\n👉 놓치지 마세요!` },
-      { type: 'RCS 문자 (버전 3)', text: `✨[두레생협] 수요특가✨\n${items.length}종 한정 특판 최대 ${maxDisc}%↓\n${shortList}${moreText}\n📅 ${dateStr} 9시~19시\n🛒 지금 바로 확인하세요!` },
-      { type: '앱 푸시', text: `🔥 오늘만! ${items.length}종 최대 ${maxDisc}% 특가 ⏰9시~19시 ${shortList}${moreText}` },
-      { type: '쇼핑몰 팝업', text: `🔥 오늘의 특판 🔥\n${items.length}종 최대 ${maxDisc}% 할인\n⏰ 오전 9시 ~ 저녁 7시` }
+      `🔥[두레생협] ${season}!\n✨${nameList}\n💰최대 ${maxDisc}%할인 ⏰${dateStr} 9~19시\n🛒단하루, 서두르세요!`,
+      `🎁[두레생협] ${dateStr} 특가!\n${nameList} 최대${maxDisc}%↓\n🌿${season}\n⏰9~19시 단하루`,
+      `✨[두레생협] 수요특가\n${nameList}\n💰최대 ${maxDisc}%할인\n🌱${season}\n⏰${dateStr} 9~19시`,
     ];
   }
 
-  const container = document.getElementById('promoList');
-  container.innerHTML = promos.map((p, i) => `
-    <div class="promo-card">
-      <div class="promo-type">${p.type}</div>
-      <div class="promo-text">${p.text}</div>
-      <div class="char-count">${p.text.replace(/\n/g, '').length}자</div>
-      <button class="btn-copy" onclick="copyPromo(${i})">복사</button>
-    </div>
-  `).join('');
+  // 100자 초과 안전장치: 초과 시 뒤에서 자르기
+  promos = promos.map(text => {
+    if (charLen(text) > 100) {
+      // 줄 단위로 줄여나감
+      let lines = text.split('\n');
+      while (charLen(lines.join('\n')) > 100 && lines.length > 2) {
+        lines.pop();
+      }
+      text = lines.join('\n');
+      // 그래도 넘으면 마지막 줄 잘라냄
+      while (charLen(text) > 100) {
+        text = text.slice(0, -1);
+      }
+    }
+    return text;
+  });
 
-  currentPromos = promos;
+  // 앱 푸시 (50자 이내)
+  let pushText;
+  if (items.length === 1) {
+    pushText = `🔥${items[0].name} ${Math.round(items[0].calc.totalDiscount*100)}%특가 ⏰9~19시`;
+  } else {
+    pushText = `🔥${fitNames(items, 20)} 최대${maxDisc}%특가 ⏰9~19시`;
+  }
+  if (pushText.length > 50) pushText = pushText.slice(0, 50);
+
+  // 쇼핑몰 팝업
+  let popupText = `🔥오늘의 특판🔥\n${fitNames(items, 30)}\n💰최대 ${maxDisc}%할인\n⏰9시~19시`;
+  if (charLen(popupText) > 100) {
+    popupText = `🔥오늘의 특판🔥\n${fitNames(items, 20)} 최대${maxDisc}%↓\n⏰9~19시`;
+  }
+
+  const allPromos = [
+    { type: 'RCS 문자 (버전 1)', text: promos[0] },
+    { type: 'RCS 문자 (버전 2)', text: promos[1] },
+    { type: 'RCS 문자 (버전 3)', text: promos[2] },
+    { type: '앱 푸시', text: pushText },
+    { type: '쇼핑몰 팝업', text: popupText }
+  ];
+
+  const container = document.getElementById('promoList');
+  container.innerHTML = allPromos.map((p, i) => {
+    const len = charLen(p.text);
+    const limit = p.type === '앱 푸시' ? 50 : 100;
+    const overClass = len > limit ? 'style="color:var(--red)"' : '';
+    return `
+      <div class="promo-card">
+        <div class="promo-type">${p.type}</div>
+        <div class="promo-text">${p.text}</div>
+        <div class="char-count" ${overClass}>${len}자 / ${limit}자</div>
+        <button class="btn-copy" onclick="copyPromo(${i})">복사</button>
+      </div>
+    `;
+  }).join('');
+
+  currentPromos = allPromos;
   document.getElementById('promoSection').classList.add('show');
 }
 
