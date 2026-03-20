@@ -208,14 +208,19 @@
           <div class="card-title">마진율 조정</div>
           <div class="slider-group">
             <div class="slider-row">
+              <span class="slider-label">목표 할인율</span>
+              <input type="range" id="sliderTotalDiscount" min="5" max="50" value="15" step="1" oninput="recalculate()">
+              <span class="slider-value" id="valTotalDiscount" style="color:#C75A3A;">15%</span>
+            </div>
+            <div class="slider-row">
               <span class="slider-label">입고가 할인율</span>
-              <input type="range" id="sliderPurchaseDiscount" min="0" max="30" value="0" step="1" oninput="recalculate()">
-              <span class="slider-value" id="valPurchaseDiscount">0%</span>
+              <input type="range" id="sliderPurchaseDiscount" min="0" max="30" value="5" step="1" oninput="recalculate()">
+              <span class="slider-value" id="valPurchaseDiscount">5%</span>
             </div>
             <div class="slider-row">
               <span class="slider-label">단협 마진율</span>
-              <input type="range" id="sliderCoopMargin" min="16" max="26" value="26" step="1" oninput="recalculate()">
-              <span class="slider-value" id="valCoopMargin">26%</span>
+              <input type="range" id="sliderCoopMargin" min="16" max="26" value="16" step="1" oninput="recalculate()">
+              <span class="slider-value" id="valCoopMargin">16%</span>
             </div>
           </div>
 
@@ -253,6 +258,7 @@
           <div style="margin-top: 16px; text-align: center;">
             <span style="font-size: 15px; color: var(--gray-500);">총 할인율: </span>
             <span id="totalDiscount" style="font-size: 28px; font-weight: 800; color: #C75A3A;">0%</span>
+            <div id="marginWarning" style="display:none; margin-top:8px; padding:8px 16px; background:#fef2f2; border-radius:8px; color:#dc2626; font-size:14px; font-weight:600;"></div>
           </div>
 
           <div class="btn-group" style="justify-content: center;">
@@ -401,8 +407,25 @@ function switchTab(tabName) {
 }
 
 // ═══════════════════════════════════════
-//  가격 계산
+//  가격 계산 (엑셀 수식 기반)
+//
+//  엑셀 구조 (상품당 2행):
+//  [정상가 행]
+//    입고가(E) = 고정값
+//    출고가(F) = 조합원가 × 0.74          (단협 26%)
+//    조합원가(G) = 고정값
+//    연합마진(H) = 1 - 입고가/출고가
+//    단협마진(I) = 1 - 출고가/조합원가     (= 26%)
+//
+//  [타임세일 행]
+//    입고가(E) = 정상 입고가 × (1 - 입고가할인율)
+//    출고가(F) = 할인 조합원가 × (1 - 단협마진)
+//    조합원가(G) = 직접 입력 or 정상 조합원가 × (1 - 총할인율)
+//    연합마진(H) = 1 - 할인입고가/할인출고가   ← ≥ 10%!
+//    단협마진(I) = 1 - 할인출고가/할인조합원가  ← ≥ 16%!
+//    총할인율(J) = 1 - 할인조합원가/정상조합원가
 // ═══════════════════════════════════════
+
 function calculatePrice() {
   const purchasePrice = Number(document.getElementById('inputPurchase').value);
   const sellingPrice = Number(document.getElementById('inputSelling').value);
@@ -415,7 +438,7 @@ function calculatePrice() {
   // 정상가 계산
   const origWholesale = Math.round(sellingPrice * 0.74); // 출고가 = 조합원가 × 0.74 (단협 26%)
   const origUnionMargin = 1 - (purchasePrice / origWholesale);
-  const origCoopMargin = 1 - (origWholesale / sellingPrice); // 26%
+  const origCoopMargin = 0.26; // 고정
 
   currentCalc = { purchasePrice, sellingPrice, origWholesale, origUnionMargin, origCoopMargin };
 
@@ -427,8 +450,9 @@ function calculatePrice() {
   document.getElementById('origCoopMargin').innerHTML = formatMargin(origCoopMargin, 'coop');
 
   // 슬라이더 초기화
-  document.getElementById('sliderPurchaseDiscount').value = 0;
-  document.getElementById('sliderCoopMargin').value = 26;
+  document.getElementById('sliderTotalDiscount').value = 15;
+  document.getElementById('sliderPurchaseDiscount').value = 5;
+  document.getElementById('sliderCoopMargin').value = 16;
 
   recalculate();
   document.getElementById('priceResult').classList.add('show');
@@ -437,90 +461,64 @@ function calculatePrice() {
 function recalculate() {
   if (!currentCalc) return;
 
-  const purchaseDiscount = Number(document.getElementById('sliderPurchaseDiscount').value);
+  const totalDiscountPct = Number(document.getElementById('sliderTotalDiscount').value);
+  const purchaseDiscountPct = Number(document.getElementById('sliderPurchaseDiscount').value);
   const coopMarginPct = Number(document.getElementById('sliderCoopMargin').value);
 
-  document.getElementById('valPurchaseDiscount').textContent = purchaseDiscount + '%';
+  document.getElementById('valTotalDiscount').textContent = totalDiscountPct + '%';
+  document.getElementById('valPurchaseDiscount').textContent = purchaseDiscountPct + '%';
   document.getElementById('valCoopMargin').textContent = coopMarginPct + '%';
 
   const { purchasePrice, sellingPrice } = currentCalc;
 
-  // 타임세일 계산
-  const salePurchase = Math.round(purchasePrice * (1 - purchaseDiscount / 100));
-  const coopMarginRate = coopMarginPct / 100;
-  const saleWholesale = Math.round(sellingPrice * (1 - coopMarginRate)); // 출고가 = 조합원가 × (1 - 단협마진)
+  // ── 엑셀 수식 그대로 ──
+  // 1) 할인 조합원가 = 정상 조합원가 × (1 - 목표할인율)
+  const saleSelling = Math.round(sellingPrice * (1 - totalDiscountPct / 100));
 
-  // 할인 조합원가는 출고가 / (1 - 단협마진)로부터 역산하면 조합원가 자체
-  // 실제로는: 단협 마진을 줄이면 출고가가 올라가고, 조합원가(소비자가)를 낮춰야 할인이 됨
-  // 엑셀 로직: 할인 조합원가를 먼저 정하고, 출고가 = 할인 조합원가 × (1 - 단협마진)
-  // 총할인율로부터 할인 조합원가를 구하는 방식
+  // 2) 할인 출고가 = 할인 조합원가 × (1 - 단협마진)
+  const coopRate = coopMarginPct / 100;
+  const saleWholesale = Math.round(saleSelling * (1 - coopRate));
 
-  // 단협 마진 축소 + 입고가 할인으로 가능한 최대 할인율 계산
-  // 출고가 = 할인조합원가 × (1 - 단협마진)
-  // 연합마진 = 1 - 할인입고가/출고가 ≥ 10%
-  // 출고가 ≥ 할인입고가 / 0.9
+  // 3) 할인 입고가 = 정상 입고가 × (1 - 입고가할인율)
+  const salePurchase = Math.round(purchasePrice * (1 - purchaseDiscountPct / 100));
 
-  const minWholesale = Math.ceil(salePurchase / 0.9); // 연합마진 10% 확보를 위한 최소 출고가
-  // 할인조합원가 = 출고가 / (1 - 단협마진)
-  const saleSellingFromMargin = Math.round(saleWholesale / (1 - coopMarginRate));
+  // 4) 마진율 역산
+  const saleUnionMargin = 1 - (salePurchase / saleWholesale);
+  const saleCoopMargin = 1 - (saleWholesale / saleSelling);
+  const totalDiscount = 1 - (saleSelling / sellingPrice);
 
-  // 실제 할인 조합원가: 출고가를 기준으로 역산
-  // 출고가 = 할인조합원가 × (1 - coopMargin)  →  할인조합원가 = 출고가 / (1 - coopMargin)
-  // 하지만 이러면 순환... 엑셀 방식대로 하자:
-  // 할인 조합원가를 변수로 두고, 출고가 = 할인조합원가 × (1 - coopMargin/100)
-  // 연합마진 = 1 - salePurchase / 출고가
+  // 5) 경고 체크
+  const warnings = [];
+  if (saleUnionMargin < 0.10) warnings.push('연합 마진 ' + (saleUnionMargin * 100).toFixed(1) + '% → 10% 이상이어야 합니다!');
+  if (saleCoopMargin < 0.16) warnings.push('단협 마진 ' + (saleCoopMargin * 100).toFixed(1) + '% → 16% 이상이어야 합니다!');
 
-  // 최적 할인 조합원가 찾기: 연합마진 ≥ 10% 제약
-  // 출고가 = X × (1 - coopMargin/100)
-  // 연합마진 = 1 - salePurchase / 출고가 ≥ 0.1
-  // 출고가 ≥ salePurchase / 0.9
-  // X × (1 - coopMargin/100) ≥ salePurchase / 0.9
-  // X ≥ salePurchase / (0.9 × (1 - coopMargin/100))
-
-  const minSaleSelling = Math.ceil(salePurchase / (0.9 * (1 - coopMarginPct / 100)));
-  // 할인 조합원가는 minSaleSelling 이상이어야 연합마진 10% 확보
-  // 하지만 사용자가 직접 할인율을 조절하는 것이므로, 일단 계산 결과를 보여주고 경고
-
-  // 간단하게: 할인 조합원가를 계산
-  // 총할인율 = (coopMarginPct가 26→16이면, + 입고가 할인 조합)
-  // 엑셀에서는 할인 조합원가를 직접 입력하거나 비율로 계산
-  // 여기서는: 두 가지 조정(입고가 할인 + 단협 마진 축소)의 효과를 합산
-
-  // 정상: 출고가 = 조합원가 × 0.74
-  // 타임: 출고가 = 할인조합원가 × (1 - coopMargin/100)
-  // 연합마진 확보를 위해: 출고가 ≥ 할인입고가 / 0.9
-
-  // 사용자 경험: 슬라이더로 단협마진, 입고가 할인을 조절하면
-  // 가능한 할인 조합원가의 범위를 보여주자
-
-  // 출고가 = 할인조합원가 × (1 - coopMargin/100)
-  // 출고가 ≥ salePurchase / 0.9
-  // 할인조합원가 ≥ salePurchase / (0.9 × (1 - coopMargin/100))
-
-  const finalSaleSelling = minSaleSelling;
-  const finalWholesale = Math.round(finalSaleSelling * (1 - coopMarginPct / 100));
-  const finalUnionMargin = 1 - (salePurchase / finalWholesale);
-  const finalCoopMargin = 1 - (finalWholesale / finalSaleSelling);
-  const totalDiscount = 1 - (finalSaleSelling / sellingPrice);
+  const warningEl = document.getElementById('marginWarning');
+  if (warnings.length > 0) {
+    warningEl.style.display = 'block';
+    warningEl.textContent = warnings.join(' / ');
+  } else {
+    warningEl.style.display = 'none';
+  }
 
   // 결과 저장
   currentCalc.sale = {
     purchasePrice: salePurchase,
-    wholesalePrice: finalWholesale,
-    sellingPrice: finalSaleSelling,
-    unionMargin: finalUnionMargin,
-    coopMargin: finalCoopMargin,
+    wholesalePrice: saleWholesale,
+    sellingPrice: saleSelling,
+    unionMargin: saleUnionMargin,
+    coopMargin: saleCoopMargin,
     totalDiscount: totalDiscount,
-    purchaseDiscount: purchaseDiscount,
-    coopMarginPct: coopMarginPct
+    purchaseDiscount: purchaseDiscountPct,
+    coopMarginPct: coopMarginPct,
+    totalDiscountPct: totalDiscountPct
   };
 
   // 표시
   document.getElementById('salePurchase').textContent = formatPrice(salePurchase);
-  document.getElementById('saleWholesale').textContent = formatPrice(finalWholesale);
-  document.getElementById('saleSelling').textContent = formatPrice(finalSaleSelling);
-  document.getElementById('saleUnionMargin').innerHTML = formatMargin(finalUnionMargin, 'union');
-  document.getElementById('saleCoopMargin').innerHTML = formatMargin(finalCoopMargin, 'coop');
+  document.getElementById('saleWholesale').textContent = formatPrice(saleWholesale);
+  document.getElementById('saleSelling').textContent = formatPrice(saleSelling);
+  document.getElementById('saleUnionMargin').innerHTML = formatMargin(saleUnionMargin, 'union');
+  document.getElementById('saleCoopMargin').innerHTML = formatMargin(saleCoopMargin, 'coop');
   document.getElementById('totalDiscount').textContent = Math.round(totalDiscount * 100) + '%';
 }
 
@@ -706,8 +704,9 @@ async function loadTimesale(id) {
   calculatePrice();
 
   if (item.priceSettings) {
-    document.getElementById('sliderPurchaseDiscount').value = item.priceSettings.purchaseDiscount || 0;
-    document.getElementById('sliderCoopMargin').value = item.priceSettings.coopMarginPct || 26;
+    document.getElementById('sliderTotalDiscount').value = item.priceSettings.totalDiscountPct || 15;
+    document.getElementById('sliderPurchaseDiscount').value = item.priceSettings.purchaseDiscount || 5;
+    document.getElementById('sliderCoopMargin').value = item.priceSettings.coopMarginPct || 16;
     recalculate();
   }
 }
