@@ -57,7 +57,7 @@
     .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--green); }
 
     /* ═══ 입력 폼 ═══ */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group.full { grid-column: 1 / -1; }
     .form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); }
@@ -180,12 +180,16 @@
             <input class="form-input" id="inputName" placeholder="예: 데친문어(600g)">
           </div>
           <div class="form-group">
-            <label class="form-label">입고가 *</label>
+            <label class="form-label">입고가 * <span class="form-hint">(연합→단협 매입가)</span></label>
             <input class="form-input" id="inputPurchase" type="number" placeholder="예: 25000">
           </div>
           <div class="form-group">
-            <label class="form-label">조합원가 (출고가) *</label>
-            <input class="form-input" id="inputSelling" type="number" placeholder="예: 38600">
+            <label class="form-label">출고가 <span class="form-hint">(자동: 조합원가×0.74)</span></label>
+            <input class="form-input" id="inputWholesale" type="number" placeholder="자동 계산됨">
+          </div>
+          <div class="form-group">
+            <label class="form-label">조합원가 * <span class="form-hint">(조합원 판매가)</span></label>
+            <input class="form-input" id="inputSelling" type="number" placeholder="예: 38600" oninput="autoCalcWholesale()">
           </div>
           <div class="form-group">
             <label class="form-label">한정수량</label>
@@ -195,6 +199,7 @@
             <label class="form-label">타임세일 날짜</label>
             <input class="form-input" id="inputDate" type="date">
           </div>
+          <div class="form-group"></div>
         </div>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="calculatePrice()">가격 계산하기</button>
@@ -397,6 +402,16 @@ function showApp() {
 }
 
 // ═══════════════════════════════════════
+//  출고가 자동 계산
+// ═══════════════════════════════════════
+function autoCalcWholesale() {
+  const sellingPrice = Number(document.getElementById('inputSelling').value);
+  if (sellingPrice) {
+    document.getElementById('inputWholesale').value = Math.round(sellingPrice * 0.74);
+  }
+}
+
+// ═══════════════════════════════════════
 //  탭 전환
 // ═══════════════════════════════════════
 function switchTab(tabName) {
@@ -435,10 +450,14 @@ function calculatePrice() {
     return;
   }
 
-  // 정상가 계산
-  const origWholesale = Math.round(sellingPrice * 0.74); // 출고가 = 조합원가 × 0.74 (단협 26%)
+  // 출고가: 직접 입력값 또는 자동 계산
+  const inputWholesale = Number(document.getElementById('inputWholesale').value);
+  const origWholesale = inputWholesale || Math.round(sellingPrice * 0.74);
+  if (!inputWholesale) document.getElementById('inputWholesale').value = origWholesale;
+
+  // 정상가 마진 계산
   const origUnionMargin = 1 - (purchasePrice / origWholesale);
-  const origCoopMargin = 0.26; // 고정
+  const origCoopMargin = 1 - (origWholesale / sellingPrice);
 
   currentCalc = { purchasePrice, sellingPrice, origWholesale, origUnionMargin, origCoopMargin };
 
@@ -536,26 +555,29 @@ function generatePromo() {
   const origPrice = formatPrice(currentCalc.sellingPrice);
   const dateStr = formatDateKr(date);
 
+  const qtyText = qty ? `한정 ${qty}개` : '';
+  const qtyText2 = qty ? `선착순 ${qty}개` : '';
+
   const promos = [
     {
       type: 'RCS 문자 (버전 1)',
-      text: `[두레생협] ${dateStr} 단 하루!\n${name} ${disc}% 특가 ${salePrice}원\n오전9시~저녁7시${qty ? ', 한정 ' + qty + '개' : ''}`
+      text: `🔥[두레생협] 오늘만 특가!\n✨ ${name}\n💰 ${origPrice}원 → ${salePrice}원 (${disc}%↓)\n⏰ ${dateStr} 9시~19시${qtyText ? '\n📦 ' + qtyText + ', 서두르세요!' : ''}`
     },
     {
       type: 'RCS 문자 (버전 2)',
-      text: `[두레생협] 오늘만! ${name}\n${origPrice}원→${salePrice}원 (${disc}%↓)\n${qty ? '선착순 ' + qty + '개 ' : ''}9시 오픈`
+      text: `🎁[두레생협] ${dateStr} 단 하루!\n🛒 ${name} ${disc}% 할인\n💵 ${origPrice}원 → ${salePrice}원\n⏰ 오전9시 오픈${qtyText2 ? ' · ' + qtyText2 : ''}\n👉 놓치지 마세요!`
     },
     {
       type: 'RCS 문자 (버전 3)',
-      text: `[두레생협] ${name} ${disc}% 할인!\n${salePrice}원에 만나보세요\n${dateStr} 9시~19시${qty ? ' ('+qty+'개 한정)' : ''}`
+      text: `✨[두레생협] 수요특가✨\n${name}\n💰 ${disc}% 할인 → ${salePrice}원\n📅 ${dateStr} 9시~19시${qtyText ? '\n🏃 ' + qtyText + ' 소진 시 종료' : ''}\n🛒 지금 바로 확인하세요!`
     },
     {
       type: '앱 푸시',
-      text: `${name} ${disc}% 특가! 오늘 하루 ${salePrice}원`
+      text: `🔥 ${name} ${disc}% 특가! 오늘 하루 ${salePrice}원 ⏰9시~19시`
     },
     {
       type: '쇼핑몰 팝업',
-      text: `오늘의 특판\n${name}\n${disc}% 할인 ${salePrice}원\n오전 9시 ~ 저녁 7시`
+      text: `🔥 오늘의 특판 🔥\n${name}\n💰 ${disc}% 할인 ${salePrice}원\n⏰ 오전 9시 ~ 저녁 7시`
     }
   ];
 
@@ -697,7 +719,9 @@ async function loadTimesale(id) {
   document.getElementById('inputCode').value = item.productCode || '';
   document.getElementById('inputName').value = item.productName || '';
   document.getElementById('inputPurchase').value = item.purchasePrice || '';
+  document.getElementById('inputWholesale').value = '';
   document.getElementById('inputSelling').value = item.sellingPrice || '';
+  autoCalcWholesale();
   document.getElementById('inputQty').value = item.quantity || '';
   document.getElementById('inputDate').value = item.saleDate || '';
 
@@ -748,6 +772,7 @@ function resetForm() {
   document.getElementById('inputCode').value = '';
   document.getElementById('inputName').value = '';
   document.getElementById('inputPurchase').value = '';
+  document.getElementById('inputWholesale').value = '';
   document.getElementById('inputSelling').value = '';
   document.getElementById('inputQty').value = '';
   document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
