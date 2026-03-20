@@ -45,7 +45,7 @@
     .btn-logout:hover { background: rgba(255,255,255,0.25); }
 
     /* ═══ 메인 레이아웃 ═══ */
-    .main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    .main { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
     /* ═══ 탭 ═══ */
     .tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--gray-100); padding: 4px; border-radius: 10px; }
@@ -54,16 +54,28 @@
 
     /* ═══ 카드 ═══ */
     .card { background: #fff; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
-    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--green); }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--green); display: flex; align-items: center; justify-content: space-between; }
 
     /* ═══ 입력 폼 ═══ */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full { grid-column: 1 / -1; }
     .form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); }
     .form-input { padding: 10px 14px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; }
     .form-input:focus { border-color: var(--green); }
-    .form-hint { font-size: 12px; color: var(--gray-500); }
+    .form-hint { font-size: 12px; color: var(--gray-500); font-weight: 400; }
+
+    /* ═══ 상품 카드 (멀티) ═══ */
+    .product-entry { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; position: relative; }
+    .product-entry .entry-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .product-entry .entry-num { font-size: 14px; font-weight: 700; color: var(--green); background: var(--green-bg); padding: 2px 10px; border-radius: 12px; }
+    .product-entry .btn-remove { background: none; border: none; color: var(--gray-500); cursor: pointer; font-size: 18px; padding: 4px 8px; border-radius: 4px; }
+    .product-entry .btn-remove:hover { background: #fef2f2; color: var(--red); }
+    .product-entry .entry-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .product-entry .entry-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .product-entry .form-input { font-size: 14px; padding: 8px 12px; }
+
+    /* ═══ 공통 날짜/버튼 행 ═══ */
+    .common-row { display: flex; align-items: end; gap: 16px; margin-top: 16px; }
+    .common-row .form-group { flex: 1; }
 
     /* ═══ 버튼 ═══ */
     .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
@@ -74,26 +86,31 @@
     .btn-danger { background: var(--red); color: #fff; }
     .btn-sm { padding: 6px 12px; font-size: 13px; }
     .btn-group { display: flex; gap: 8px; margin-top: 16px; }
+    .btn-add { background: var(--green-bg); color: var(--green); border: 2px dashed var(--green); border-radius: var(--radius); padding: 12px; width: 100%; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-add:hover { background: #e0f0e8; }
+    .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ═══ 가격 결과 ═══ */
-    .price-result { display: none; margin-top: 24px; }
-    .price-result.show { display: block; }
-    .price-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    .price-table th, .price-table td { padding: 12px 16px; text-align: center; border-bottom: 1px solid var(--gray-200); font-size: 14px; }
-    .price-table th { background: var(--green-bg); color: var(--green); font-weight: 600; }
-    .price-table .row-label { text-align: left; font-weight: 600; }
+    /* ═══ 결과 테이블 ═══ */
+    .results-section { display: none; margin-top: 24px; }
+    .results-section.show { display: block; }
+    .price-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    .price-table th, .price-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--gray-200); }
+    .price-table th { background: var(--green-bg); color: var(--green); font-weight: 600; font-size: 12px; }
+    .price-table .row-label { text-align: left; font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .price-table .highlight { background: #fef3c7; font-weight: 700; }
     .margin-ok { color: #16a34a; font-weight: 700; }
     .margin-warn { color: var(--orange); font-weight: 700; }
     .margin-danger { color: var(--red); font-weight: 700; }
 
     /* ═══ 슬라이더 ═══ */
-    .slider-group { margin-top: 20px; padding: 20px; background: var(--gray-50); border-radius: var(--radius); }
-    .slider-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-    .slider-label { min-width: 120px; font-size: 14px; font-weight: 600; }
-    .slider-value { min-width: 60px; text-align: right; font-size: 16px; font-weight: 700; color: var(--green); }
+    .slider-group { padding: 16px; background: var(--gray-50); border-radius: var(--radius); margin-bottom: 16px; }
+    .slider-group-title { font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 12px; }
+    .slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .slider-label { min-width: 100px; font-size: 13px; font-weight: 600; }
+    .slider-value { min-width: 50px; text-align: right; font-size: 15px; font-weight: 700; color: var(--green); }
     input[type="range"] { flex: 1; height: 6px; -webkit-appearance: none; background: var(--gray-200); border-radius: 3px; outline: none; }
-    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--green); border-radius: 50%; cursor: pointer; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--green); border-radius: 50%; cursor: pointer; }
+    .warning-box { margin-top:8px; padding:8px 12px; background:#fef2f2; border-radius:8px; color:#dc2626; font-size:13px; font-weight:600; display:none; }
 
     /* ═══ 홍보 문구 ═══ */
     .promo-section { display: none; margin-top: 24px; }
@@ -106,23 +123,24 @@
     .btn-copy:hover { background: var(--green-light); }
     .copy-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--gray-900); color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 14px; display: none; z-index: 999; }
 
-    /* ═══ 이미지 미리보기 ═══ */
+    /* ═══ 이미지 미리보기 (360x567 고정) ═══ */
     .preview-section { display: none; margin-top: 24px; }
     .preview-section.show { display: block; }
-    .preview-frame { background: #1a1a1a; border-radius: var(--radius); padding: 20px; text-align: center; }
-    .preview-card-wrap { display: inline-block; max-width: 380px; width: 100%; background: #fff; border-radius: 16px; overflow: hidden; text-align: left; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-    .preview-card-header { background: linear-gradient(135deg, #3D6041, #2d4a31); color: #fff; padding: 20px; text-align: center; }
-    .preview-card-header .sale-badge { display: inline-block; background: #C75A3A; color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-    .preview-card-header h3 { font-size: 20px; margin-bottom: 4px; }
-    .preview-card-header .time-info { font-size: 13px; opacity: 0.8; }
-    .preview-card-body { padding: 24px; }
-    .preview-product-name { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--gray-900); }
-    .preview-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .preview-original { font-size: 14px; color: var(--gray-500); text-decoration: line-through; }
-    .preview-sale { font-size: 24px; font-weight: 800; color: #C75A3A; }
-    .preview-discount { display: inline-block; background: #C75A3A; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: 700; }
-    .preview-qty { font-size: 13px; color: var(--gray-500); margin-top: 8px; }
-    .preview-card-footer { background: var(--gray-50); padding: 16px 24px; text-align: center; font-size: 13px; color: var(--gray-500); }
+    .preview-frame { background: #1a1a1a; border-radius: var(--radius); padding: 20px; text-align: center; overflow-x: auto; }
+    .preview-card-wrap { display: inline-block; width: 360px; height: 567px; background: #fff; border-radius: 0; overflow: hidden; text-align: left; box-shadow: 0 8px 32px rgba(0,0,0,0.3); position: relative; }
+    .preview-card-header { background: linear-gradient(135deg, #3D6041, #2d4a31); color: #fff; padding: 18px 20px 14px; text-align: center; }
+    .preview-card-header .sale-badge { display: inline-block; background: #C75A3A; color: #fff; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .preview-card-header h3 { font-size: 18px; margin-bottom: 2px; }
+    .preview-card-header .time-info { font-size: 12px; opacity: 0.8; }
+    .preview-product-item { padding: 10px 20px; border-bottom: 1px solid var(--gray-100); }
+    .preview-product-item:last-child { border-bottom: none; }
+    .preview-product-name { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
+    .preview-price-row { display: flex; align-items: center; gap: 8px; }
+    .preview-original { font-size: 12px; color: var(--gray-500); text-decoration: line-through; }
+    .preview-sale { font-size: 18px; font-weight: 800; color: #C75A3A; }
+    .preview-discount { display: inline-block; background: #C75A3A; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 700; }
+    .preview-qty { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+    .preview-card-footer { position: absolute; bottom: 0; left: 0; right: 0; background: var(--gray-50); padding: 12px 20px; text-align: center; font-size: 12px; color: var(--gray-500); }
 
     /* ═══ 히스토리 ═══ */
     .history-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-100); cursor: pointer; transition: background 0.2s; }
@@ -169,102 +187,55 @@
     <!-- ═══ 가격 계산 탭 ═══ -->
     <div id="tab-calc">
       <div class="card">
-        <div class="card-title">상품 정보 입력</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">상품코드</label>
-            <input class="form-input" id="inputCode" placeholder="예: 55498">
-          </div>
-          <div class="form-group">
-            <label class="form-label">상품명 *</label>
-            <input class="form-input" id="inputName" placeholder="예: 데친문어(600g)">
-          </div>
-          <div class="form-group">
-            <label class="form-label">입고가 * <span class="form-hint">(연합→단협 매입가)</span></label>
-            <input class="form-input" id="inputPurchase" type="number" placeholder="예: 25000">
-          </div>
-          <div class="form-group">
-            <label class="form-label">출고가 <span class="form-hint">(자동: 조합원가×0.74)</span></label>
-            <input class="form-input" id="inputWholesale" type="number" placeholder="자동 계산됨">
-          </div>
-          <div class="form-group">
-            <label class="form-label">조합원가 * <span class="form-hint">(조합원 판매가)</span></label>
-            <input class="form-input" id="inputSelling" type="number" placeholder="예: 38600" oninput="autoCalcWholesale()">
-          </div>
-          <div class="form-group">
-            <label class="form-label">한정수량</label>
-            <input class="form-input" id="inputQty" type="number" placeholder="예: 200">
-          </div>
+        <div class="card-title">
+          <span>상품 정보 입력 (최대 6개)</span>
+          <span id="productCount" style="font-size:13px; color:var(--gray-500); font-weight:500;">0 / 6</span>
+        </div>
+
+        <!-- 상품 목록 -->
+        <div id="productList"></div>
+
+        <!-- 상품 추가 버튼 -->
+        <button class="btn-add" id="btnAddProduct" onclick="addProduct()">+ 상품 추가</button>
+
+        <!-- 공통 설정 -->
+        <div class="common-row">
           <div class="form-group">
             <label class="form-label">타임세일 날짜</label>
             <input class="form-input" id="inputDate" type="date">
           </div>
-          <div class="form-group"></div>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick="calculatePrice()">가격 계산하기</button>
-          <button class="btn btn-secondary" onclick="resetForm()">초기화</button>
+          <div class="form-group" style="flex:0;">
+            <label class="form-label">&nbsp;</label>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-primary" onclick="calculateAll()">전체 계산하기</button>
+              <button class="btn btn-secondary" onclick="resetAll()">초기화</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- 가격 조정 슬라이더 -->
-      <div class="price-result" id="priceResult">
+      <!-- 전체 결과 -->
+      <div class="results-section" id="resultsSection">
         <div class="card">
-          <div class="card-title">마진율 조정</div>
-          <div class="slider-group">
-            <div class="slider-row">
-              <span class="slider-label">목표 할인율</span>
-              <input type="range" id="sliderTotalDiscount" min="5" max="50" value="15" step="1" oninput="recalculate()">
-              <span class="slider-value" id="valTotalDiscount" style="color:#C75A3A;">15%</span>
-            </div>
-            <div class="slider-row">
-              <span class="slider-label">입고가 할인율</span>
-              <input type="range" id="sliderPurchaseDiscount" min="0" max="30" value="5" step="1" oninput="recalculate()">
-              <span class="slider-value" id="valPurchaseDiscount">5%</span>
-            </div>
-            <div class="slider-row">
-              <span class="slider-label">단협 마진율</span>
-              <input type="range" id="sliderCoopMargin" min="16" max="26" value="16" step="1" oninput="recalculate()">
-              <span class="slider-value" id="valCoopMargin">16%</span>
-            </div>
-          </div>
+          <div class="card-title">마진율 조정 & 결과</div>
 
+          <!-- 상품별 슬라이더 -->
+          <div id="sliderList"></div>
+
+          <!-- 전체 결과 테이블 -->
           <table class="price-table">
             <thead>
               <tr>
-                <th></th>
-                <th>입고가</th>
-                <th>출고가</th>
-                <th>조합원가</th>
+                <th>상품명</th>
+                <th>정상 조합원가</th>
+                <th>할인 조합원가</th>
+                <th>할인율</th>
                 <th>연합 마진</th>
                 <th>단협 마진</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="row-label">정상가</td>
-                <td id="origPurchase">-</td>
-                <td id="origWholesale">-</td>
-                <td id="origSelling">-</td>
-                <td id="origUnionMargin">-</td>
-                <td id="origCoopMargin">-</td>
-              </tr>
-              <tr class="highlight">
-                <td class="row-label">타임세일가</td>
-                <td id="salePurchase">-</td>
-                <td id="saleWholesale">-</td>
-                <td id="saleSelling">-</td>
-                <td id="saleUnionMargin">-</td>
-                <td id="saleCoopMargin">-</td>
-              </tr>
-            </tbody>
+            <tbody id="resultTableBody"></tbody>
           </table>
-
-          <div style="margin-top: 16px; text-align: center;">
-            <span style="font-size: 15px; color: var(--gray-500);">총 할인율: </span>
-            <span id="totalDiscount" style="font-size: 28px; font-weight: 800; color: #C75A3A;">0%</span>
-            <div id="marginWarning" style="display:none; margin-top:8px; padding:8px 16px; background:#fef2f2; border-radius:8px; color:#dc2626; font-size:14px; font-weight:600;"></div>
-          </div>
 
           <div class="btn-group" style="justify-content: center;">
             <button class="btn btn-primary" onclick="generatePromo()">홍보 문구 생성</button>
@@ -279,35 +250,24 @@
           <div class="card-title">홍보 문구 (자동 생성)</div>
           <div id="promoList"></div>
           <div class="btn-group">
-            <button class="btn btn-primary" onclick="regeneratePromo()">다시 생성</button>
+            <button class="btn btn-primary" onclick="generatePromo()">다시 생성</button>
             <button class="btn btn-secondary" onclick="saveTimesale()">저장하기</button>
           </div>
         </div>
       </div>
 
-      <!-- 이미지 미리보기 -->
+      <!-- 이미지 미리보기 (360x567 고정) -->
       <div class="preview-section" id="previewSection">
         <div class="card">
-          <div class="card-title">홍보 이미지 미리보기</div>
+          <div class="card-title">홍보 이미지 미리보기 <span style="font-size:13px; color:var(--gray-500); font-weight:400;">360 x 567px</span></div>
           <div class="preview-frame">
             <div class="preview-card-wrap" id="previewCard">
               <div class="preview-card-header">
-                <div class="sale-badge" id="prevBadge">30% 할인</div>
+                <div class="sale-badge" id="prevBadge">특가</div>
                 <h3>솔직한 특판</h3>
                 <div class="time-info" id="prevTime">오전 9시 ~ 저녁 7시, 단 하루!</div>
               </div>
-              <div class="preview-card-body">
-                <div class="preview-product-name" id="prevName">상품명</div>
-                <div class="preview-price-row">
-                  <span class="preview-original" id="prevOriginal">0원</span>
-                  <span style="color: var(--gray-300);">→</span>
-                  <span class="preview-sale" id="prevSale">0원</span>
-                </div>
-                <div style="margin-top: 4px;">
-                  <span class="preview-discount" id="prevDiscount">0% 할인</span>
-                </div>
-                <div class="preview-qty" id="prevQty">한정수량 0개</div>
-              </div>
+              <div id="previewProducts"></div>
               <div class="preview-card-footer">
                 두레생협 | 사람과 자연을 잇는 먹거리
               </div>
@@ -343,7 +303,9 @@
 //  상태
 // ═══════════════════════════════════════
 let currentUser = null;
-let currentCalc = null; // 현재 계산 결과
+let products = []; // { id, code, name, purchasePrice, wholesalePrice, sellingPrice, qty, discount, purchaseDiscount, coopMargin, calc }
+let nextProductId = 1;
+let currentPromos = [];
 
 // ═══════════════════════════════════════
 //  초기화
@@ -365,8 +327,7 @@ async function showLogin() {
   document.getElementById('app').style.display = 'none';
   const res = await fetch('/api/auth/users');
   const users = await res.json();
-  const container = document.getElementById('loginCards');
-  container.innerHTML = users.map(u => `
+  document.getElementById('loginCards').innerHTML = users.map(u => `
     <div class="login-card" onclick="login('${u.id}')">
       <div class="avatar" style="background:${u.color}">${u.initial}</div>
       <div class="name">${u.name}</div>
@@ -376,11 +337,7 @@ async function showLogin() {
 }
 
 async function login(userId) {
-  const res = await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId })
-  });
+  const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId }) });
   currentUser = await res.json();
   showApp();
 }
@@ -398,22 +355,10 @@ function showApp() {
   document.getElementById('headerAvatar').textContent = currentUser.initial;
   document.getElementById('headerName').textContent = currentUser.name;
   document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
+  addProduct(); // 기본 1개
   loadHistory();
 }
 
-// ═══════════════════════════════════════
-//  출고가 자동 계산
-// ═══════════════════════════════════════
-function autoCalcWholesale() {
-  const sellingPrice = Number(document.getElementById('inputSelling').value);
-  if (sellingPrice) {
-    document.getElementById('inputWholesale').value = Math.round(sellingPrice * 0.74);
-  }
-}
-
-// ═══════════════════════════════════════
-//  탭 전환
-// ═══════════════════════════════════════
 function switchTab(tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
   document.getElementById('tab-calc').style.display = tabName === 'calc' ? 'block' : 'none';
@@ -422,164 +367,242 @@ function switchTab(tabName) {
 }
 
 // ═══════════════════════════════════════
-//  가격 계산 (엑셀 수식 기반)
-//
-//  엑셀 구조 (상품당 2행):
-//  [정상가 행]
-//    입고가(E) = 고정값
-//    출고가(F) = 조합원가 × 0.74          (단협 26%)
-//    조합원가(G) = 고정값
-//    연합마진(H) = 1 - 입고가/출고가
-//    단협마진(I) = 1 - 출고가/조합원가     (= 26%)
-//
-//  [타임세일 행]
-//    입고가(E) = 정상 입고가 × (1 - 입고가할인율)
-//    출고가(F) = 할인 조합원가 × (1 - 단협마진)
-//    조합원가(G) = 직접 입력 or 정상 조합원가 × (1 - 총할인율)
-//    연합마진(H) = 1 - 할인입고가/할인출고가   ← ≥ 10%!
-//    단협마진(I) = 1 - 할인출고가/할인조합원가  ← ≥ 16%!
-//    총할인율(J) = 1 - 할인조합원가/정상조합원가
+//  상품 추가/삭제 (최대 6개)
 // ═══════════════════════════════════════
+function addProduct() {
+  if (products.length >= 6) return;
 
-function calculatePrice() {
-  const purchasePrice = Number(document.getElementById('inputPurchase').value);
-  const sellingPrice = Number(document.getElementById('inputSelling').value);
+  const id = nextProductId++;
+  products.push({ id, code: '', name: '', purchasePrice: 0, wholesalePrice: 0, sellingPrice: 0, qty: 0, totalDiscount: 15, purchaseDiscount: 5, coopMargin: 16, calc: null });
 
-  if (!purchasePrice || !sellingPrice) {
-    alert('입고가와 조합원가를 입력해주세요.');
+  renderProductList();
+}
+
+function removeProduct(id) {
+  if (products.length <= 1) return;
+  products = products.filter(p => p.id !== id);
+  renderProductList();
+}
+
+function renderProductList() {
+  const container = document.getElementById('productList');
+  container.innerHTML = products.map((p, i) => `
+    <div class="product-entry" data-id="${p.id}">
+      <div class="entry-header">
+        <span class="entry-num">상품 ${i + 1}</span>
+        ${products.length > 1 ? `<button class="btn-remove" onclick="removeProduct(${p.id})">✕</button>` : ''}
+      </div>
+      <div class="entry-grid">
+        <div class="form-group">
+          <label class="form-label">상품코드</label>
+          <input class="form-input" value="${p.code}" onchange="updateProduct(${p.id},'code',this.value)" placeholder="55498">
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label class="form-label">상품명 *</label>
+          <input class="form-input" value="${p.name}" onchange="updateProduct(${p.id},'name',this.value)" placeholder="데친문어(600g)">
+        </div>
+      </div>
+      <div class="entry-grid" style="margin-top:10px;">
+        <div class="form-group">
+          <label class="form-label">입고가 * <span class="form-hint">(매입가)</span></label>
+          <input class="form-input" type="number" value="${p.purchasePrice || ''}" onchange="updateProduct(${p.id},'purchasePrice',this.value)" placeholder="25000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">출고가 <span class="form-hint">(자동×0.74)</span></label>
+          <input class="form-input" type="number" value="${p.wholesalePrice || ''}" onchange="updateProduct(${p.id},'wholesalePrice',this.value)" placeholder="자동 계산">
+        </div>
+        <div class="form-group">
+          <label class="form-label">조합원가 * <span class="form-hint">(판매가)</span></label>
+          <input class="form-input" type="number" value="${p.sellingPrice || ''}" oninput="autoWholesale(${p.id},this.value)" onchange="updateProduct(${p.id},'sellingPrice',this.value)" placeholder="38600">
+        </div>
+      </div>
+      <div class="entry-grid-2">
+        <div class="form-group">
+          <label class="form-label">한정수량</label>
+          <input class="form-input" type="number" value="${p.qty || ''}" onchange="updateProduct(${p.id},'qty',this.value)" placeholder="200">
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // 버튼 상태
+  const btn = document.getElementById('btnAddProduct');
+  btn.disabled = products.length >= 6;
+  btn.textContent = products.length >= 6 ? '최대 6개까지 추가 가능' : '+ 상품 추가';
+  document.getElementById('productCount').textContent = `${products.length} / 6`;
+}
+
+function updateProduct(id, field, value) {
+  const p = products.find(p => p.id === id);
+  if (!p) return;
+  if (['purchasePrice', 'wholesalePrice', 'sellingPrice', 'qty'].includes(field)) {
+    p[field] = Number(value) || 0;
+  } else {
+    p[field] = value;
+  }
+}
+
+function autoWholesale(id, value) {
+  const selling = Number(value);
+  if (!selling) return;
+  const p = products.find(p => p.id === id);
+  if (!p) return;
+  p.sellingPrice = selling;
+  p.wholesalePrice = Math.round(selling * 0.74);
+  // 출고가 입력란 업데이트
+  const entry = document.querySelector(`.product-entry[data-id="${id}"]`);
+  if (entry) {
+    const inputs = entry.querySelectorAll('input[type="number"]');
+    inputs[1].value = p.wholesalePrice; // 출고가는 두 번째 number input
+  }
+}
+
+// ═══════════════════════════════════════
+//  전체 가격 계산
+// ═══════════════════════════════════════
+function calculateAll() {
+  const valid = products.filter(p => p.purchasePrice && p.sellingPrice);
+  if (valid.length === 0) {
+    alert('최소 1개 상품의 입고가와 조합원가를 입력해주세요.');
     return;
   }
 
-  // 출고가: 직접 입력값 또는 자동 계산
-  const inputWholesale = Number(document.getElementById('inputWholesale').value);
-  const origWholesale = inputWholesale || Math.round(sellingPrice * 0.74);
-  if (!inputWholesale) document.getElementById('inputWholesale').value = origWholesale;
+  // 출고가 자동 채우기
+  products.forEach(p => {
+    if (p.sellingPrice && !p.wholesalePrice) {
+      p.wholesalePrice = Math.round(p.sellingPrice * 0.74);
+    }
+  });
 
-  // 정상가 마진 계산
-  const origUnionMargin = 1 - (purchasePrice / origWholesale);
-  const origCoopMargin = 1 - (origWholesale / sellingPrice);
-
-  currentCalc = { purchasePrice, sellingPrice, origWholesale, origUnionMargin, origCoopMargin };
-
-  // 정상가 표시
-  document.getElementById('origPurchase').textContent = formatPrice(purchasePrice);
-  document.getElementById('origWholesale').textContent = formatPrice(origWholesale);
-  document.getElementById('origSelling').textContent = formatPrice(sellingPrice);
-  document.getElementById('origUnionMargin').innerHTML = formatMargin(origUnionMargin, 'union');
-  document.getElementById('origCoopMargin').innerHTML = formatMargin(origCoopMargin, 'coop');
-
-  // 슬라이더 초기화
-  document.getElementById('sliderTotalDiscount').value = 15;
-  document.getElementById('sliderPurchaseDiscount').value = 5;
-  document.getElementById('sliderCoopMargin').value = 16;
-
-  recalculate();
-  document.getElementById('priceResult').classList.add('show');
+  renderSliders();
+  recalculateAll();
+  document.getElementById('resultsSection').classList.add('show');
 }
 
-function recalculate() {
-  if (!currentCalc) return;
+function renderSliders() {
+  const container = document.getElementById('sliderList');
+  container.innerHTML = products.filter(p => p.purchasePrice && p.sellingPrice).map((p, i) => `
+    <div class="slider-group">
+      <div class="slider-group-title">상품 ${i + 1}: ${p.name || '이름 없음'}</div>
+      <div class="slider-row">
+        <span class="slider-label">목표 할인율</span>
+        <input type="range" min="5" max="50" value="${p.totalDiscount}" step="1" oninput="updateSlider(${p.id},'totalDiscount',this.value)">
+        <span class="slider-value" style="color:#C75A3A;" id="val-disc-${p.id}">${p.totalDiscount}%</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">입고가 할인</span>
+        <input type="range" min="0" max="30" value="${p.purchaseDiscount}" step="1" oninput="updateSlider(${p.id},'purchaseDiscount',this.value)">
+        <span class="slider-value" id="val-pd-${p.id}">${p.purchaseDiscount}%</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">단협 마진</span>
+        <input type="range" min="16" max="26" value="${p.coopMargin}" step="1" oninput="updateSlider(${p.id},'coopMargin',this.value)">
+        <span class="slider-value" id="val-cm-${p.id}">${p.coopMargin}%</span>
+      </div>
+      <div class="warning-box" id="warn-${p.id}"></div>
+    </div>
+  `).join('');
+}
 
-  const totalDiscountPct = Number(document.getElementById('sliderTotalDiscount').value);
-  const purchaseDiscountPct = Number(document.getElementById('sliderPurchaseDiscount').value);
-  const coopMarginPct = Number(document.getElementById('sliderCoopMargin').value);
+function updateSlider(id, field, value) {
+  const p = products.find(p => p.id === id);
+  if (!p) return;
+  p[field] = Number(value);
 
-  document.getElementById('valTotalDiscount').textContent = totalDiscountPct + '%';
-  document.getElementById('valPurchaseDiscount').textContent = purchaseDiscountPct + '%';
-  document.getElementById('valCoopMargin').textContent = coopMarginPct + '%';
+  // 슬라이더 값 표시 업데이트
+  if (field === 'totalDiscount') document.getElementById(`val-disc-${id}`).textContent = value + '%';
+  if (field === 'purchaseDiscount') document.getElementById(`val-pd-${id}`).textContent = value + '%';
+  if (field === 'coopMargin') document.getElementById(`val-cm-${id}`).textContent = value + '%';
 
-  const { purchasePrice, sellingPrice } = currentCalc;
+  recalculateAll();
+}
 
-  // ── 엑셀 수식 그대로 ──
-  // 1) 할인 조합원가 = 정상 조합원가 × (1 - 목표할인율)
-  const saleSelling = Math.round(sellingPrice * (1 - totalDiscountPct / 100));
+function recalculateAll() {
+  const tbody = document.getElementById('resultTableBody');
+  let rows = '';
 
-  // 2) 할인 출고가 = 할인 조합원가 × (1 - 단협마진)
-  const coopRate = coopMarginPct / 100;
-  const saleWholesale = Math.round(saleSelling * (1 - coopRate));
+  products.filter(p => p.purchasePrice && p.sellingPrice).forEach(p => {
+    // 엑셀 수식 그대로
+    const saleSelling = Math.round(p.sellingPrice * (1 - p.totalDiscount / 100));
+    const saleWholesale = Math.round(saleSelling * (1 - p.coopMargin / 100));
+    const salePurchase = Math.round(p.purchasePrice * (1 - p.purchaseDiscount / 100));
+    const unionMargin = 1 - (salePurchase / saleWholesale);
+    const coopMargin = 1 - (saleWholesale / saleSelling);
+    const totalDiscount = 1 - (saleSelling / p.sellingPrice);
 
-  // 3) 할인 입고가 = 정상 입고가 × (1 - 입고가할인율)
-  const salePurchase = Math.round(purchasePrice * (1 - purchaseDiscountPct / 100));
+    p.calc = { salePurchase, saleWholesale, saleSelling, unionMargin, coopMargin, totalDiscount };
 
-  // 4) 마진율 역산
-  const saleUnionMargin = 1 - (salePurchase / saleWholesale);
-  const saleCoopMargin = 1 - (saleWholesale / saleSelling);
-  const totalDiscount = 1 - (saleSelling / sellingPrice);
+    // 경고
+    const warnings = [];
+    if (unionMargin < 0.10) warnings.push('연합 ' + (unionMargin * 100).toFixed(1) + '% < 10%');
+    if (coopMargin < 0.16) warnings.push('단협 ' + (coopMargin * 100).toFixed(1) + '% < 16%');
+    const warnEl = document.getElementById(`warn-${p.id}`);
+    if (warnEl) {
+      warnEl.style.display = warnings.length > 0 ? 'block' : 'none';
+      warnEl.textContent = warnings.join(' / ');
+    }
 
-  // 5) 경고 체크
-  const warnings = [];
-  if (saleUnionMargin < 0.10) warnings.push('연합 마진 ' + (saleUnionMargin * 100).toFixed(1) + '% → 10% 이상이어야 합니다!');
-  if (saleCoopMargin < 0.16) warnings.push('단협 마진 ' + (saleCoopMargin * 100).toFixed(1) + '% → 16% 이상이어야 합니다!');
+    rows += `
+      <tr class="highlight">
+        <td class="row-label" title="${p.name}">${p.name || '-'}</td>
+        <td>${formatPrice(p.sellingPrice)}원</td>
+        <td style="font-weight:800; color:#C75A3A;">${formatPrice(saleSelling)}원</td>
+        <td style="font-weight:800; color:#C75A3A;">${Math.round(totalDiscount * 100)}%</td>
+        <td>${formatMargin(unionMargin, 'union')}</td>
+        <td>${formatMargin(coopMargin, 'coop')}</td>
+      </tr>
+    `;
+  });
 
-  const warningEl = document.getElementById('marginWarning');
-  if (warnings.length > 0) {
-    warningEl.style.display = 'block';
-    warningEl.textContent = warnings.join(' / ');
-  } else {
-    warningEl.style.display = 'none';
-  }
-
-  // 결과 저장
-  currentCalc.sale = {
-    purchasePrice: salePurchase,
-    wholesalePrice: saleWholesale,
-    sellingPrice: saleSelling,
-    unionMargin: saleUnionMargin,
-    coopMargin: saleCoopMargin,
-    totalDiscount: totalDiscount,
-    purchaseDiscount: purchaseDiscountPct,
-    coopMarginPct: coopMarginPct,
-    totalDiscountPct: totalDiscountPct
-  };
-
-  // 표시
-  document.getElementById('salePurchase').textContent = formatPrice(salePurchase);
-  document.getElementById('saleWholesale').textContent = formatPrice(saleWholesale);
-  document.getElementById('saleSelling').textContent = formatPrice(saleSelling);
-  document.getElementById('saleUnionMargin').innerHTML = formatMargin(saleUnionMargin, 'union');
-  document.getElementById('saleCoopMargin').innerHTML = formatMargin(saleCoopMargin, 'coop');
-  document.getElementById('totalDiscount').textContent = Math.round(totalDiscount * 100) + '%';
+  tbody.innerHTML = rows;
 }
 
 // ═══════════════════════════════════════
-//  홍보 문구 생성
+//  홍보 문구 생성 (멀티 상품)
 // ═══════════════════════════════════════
 function generatePromo() {
-  if (!currentCalc || !currentCalc.sale) return;
+  const items = products.filter(p => p.calc);
+  if (items.length === 0) return;
 
-  const name = document.getElementById('inputName').value;
-  const qty = document.getElementById('inputQty').value;
   const date = document.getElementById('inputDate').value;
-  const disc = Math.round(currentCalc.sale.totalDiscount * 100);
-  const salePrice = formatPrice(currentCalc.sale.sellingPrice);
-  const origPrice = formatPrice(currentCalc.sellingPrice);
   const dateStr = formatDateKr(date);
+  const maxDisc = Math.max(...items.map(p => Math.round(p.calc.totalDiscount * 100)));
 
-  const qtyText = qty ? `한정 ${qty}개` : '';
-  const qtyText2 = qty ? `선착순 ${qty}개` : '';
+  let promos;
 
-  const promos = [
-    {
-      type: 'RCS 문자 (버전 1)',
-      text: `🔥[두레생협] 오늘만 특가!\n✨ ${name}\n💰 ${origPrice}원 → ${salePrice}원 (${disc}%↓)\n⏰ ${dateStr} 9시~19시${qtyText ? '\n📦 ' + qtyText + ', 서두르세요!' : ''}`
-    },
-    {
-      type: 'RCS 문자 (버전 2)',
-      text: `🎁[두레생협] ${dateStr} 단 하루!\n🛒 ${name} ${disc}% 할인\n💵 ${origPrice}원 → ${salePrice}원\n⏰ 오전9시 오픈${qtyText2 ? ' · ' + qtyText2 : ''}\n👉 놓치지 마세요!`
-    },
-    {
-      type: 'RCS 문자 (버전 3)',
-      text: `✨[두레생협] 수요특가✨\n${name}\n💰 ${disc}% 할인 → ${salePrice}원\n📅 ${dateStr} 9시~19시${qtyText ? '\n🏃 ' + qtyText + ' 소진 시 종료' : ''}\n🛒 지금 바로 확인하세요!`
-    },
-    {
-      type: '앱 푸시',
-      text: `🔥 ${name} ${disc}% 특가! 오늘 하루 ${salePrice}원 ⏰9시~19시`
-    },
-    {
-      type: '쇼핑몰 팝업',
-      text: `🔥 오늘의 특판 🔥\n${name}\n💰 ${disc}% 할인 ${salePrice}원\n⏰ 오전 9시 ~ 저녁 7시`
-    }
-  ];
+  if (items.length === 1) {
+    // 단일 상품
+    const p = items[0];
+    const disc = Math.round(p.calc.totalDiscount * 100);
+    const salePrice = formatPrice(p.calc.saleSelling);
+    const origPrice = formatPrice(p.sellingPrice);
+    const qtyText = p.qty ? `한정 ${p.qty}개` : '';
+
+    promos = [
+      { type: 'RCS 문자 (버전 1)', text: `🔥[두레생협] 오늘만 특가!\n✨ ${p.name}\n💰 ${origPrice}원 → ${salePrice}원 (${disc}%↓)\n⏰ ${dateStr} 9시~19시${qtyText ? '\n📦 ' + qtyText + ', 서두르세요!' : ''}` },
+      { type: 'RCS 문자 (버전 2)', text: `🎁[두레생협] ${dateStr} 단 하루!\n🛒 ${p.name} ${disc}% 할인\n💵 ${origPrice}원 → ${salePrice}원\n⏰ 오전9시 오픈${p.qty ? ' · 선착순 ' + p.qty + '개' : ''}\n👉 놓치지 마세요!` },
+      { type: 'RCS 문자 (버전 3)', text: `✨[두레생협] 수요특가✨\n${p.name}\n💰 ${disc}% 할인 → ${salePrice}원\n📅 ${dateStr} 9시~19시${qtyText ? '\n🏃 ' + qtyText + ' 소진 시 종료' : ''}\n🛒 지금 바로 확인하세요!` },
+      { type: '앱 푸시', text: `🔥 ${p.name} ${disc}% 특가! 오늘 하루 ${salePrice}원 ⏰9시~19시` },
+      { type: '쇼핑몰 팝업', text: `🔥 오늘의 특판 🔥\n${p.name}\n💰 ${disc}% 할인 ${salePrice}원\n⏰ 오전 9시 ~ 저녁 7시` }
+    ];
+  } else {
+    // 멀티 상품
+    const itemList = items.map(p => {
+      const disc = Math.round(p.calc.totalDiscount * 100);
+      return `✨${p.name} ${disc}%↓ ${formatPrice(p.calc.saleSelling)}원`;
+    }).join('\n');
+
+    const shortList = items.slice(0, 3).map(p => `${p.name} ${Math.round(p.calc.totalDiscount * 100)}%↓`).join(', ');
+    const moreText = items.length > 3 ? ` 외 ${items.length - 3}종` : '';
+
+    promos = [
+      { type: 'RCS 문자 (버전 1)', text: `🔥[두레생협] ${dateStr} 특가!\n최대 ${maxDisc}% 할인, ${items.length}종 한정 특판\n${itemList}\n⏰ 9시~19시, 서두르세요!` },
+      { type: 'RCS 문자 (버전 2)', text: `🎁[두레생협] 오늘만 단 하루!\n🛒 ${shortList}${moreText}\n💰 최대 ${maxDisc}% 할인\n⏰ ${dateStr} 오전9시 오픈\n👉 놓치지 마세요!` },
+      { type: 'RCS 문자 (버전 3)', text: `✨[두레생협] 수요특가✨\n${items.length}종 한정 특판 최대 ${maxDisc}%↓\n${shortList}${moreText}\n📅 ${dateStr} 9시~19시\n🛒 지금 바로 확인하세요!` },
+      { type: '앱 푸시', text: `🔥 오늘만! ${items.length}종 최대 ${maxDisc}% 특가 ⏰9시~19시 ${shortList}${moreText}` },
+      { type: '쇼핑몰 팝업', text: `🔥 오늘의 특판 🔥\n${items.length}종 최대 ${maxDisc}% 할인\n⏰ 오전 9시 ~ 저녁 7시` }
+    ];
+  }
 
   const container = document.getElementById('promoList');
   container.innerHTML = promos.map((p, i) => `
@@ -587,42 +610,48 @@ function generatePromo() {
       <div class="promo-type">${p.type}</div>
       <div class="promo-text">${p.text}</div>
       <div class="char-count">${p.text.replace(/\n/g, '').length}자</div>
-      <button class="btn-copy" onclick="copyText(this, ${i})">복사</button>
+      <button class="btn-copy" onclick="copyPromo(${i})">복사</button>
     </div>
   `).join('');
 
-  currentCalc.promos = promos;
+  currentPromos = promos;
   document.getElementById('promoSection').classList.add('show');
 }
 
-function regeneratePromo() {
-  generatePromo();
-}
-
 // ═══════════════════════════════════════
-//  이미지 미리보기
+//  이미지 미리보기 (360x567 고정)
 // ═══════════════════════════════════════
 function generatePreview() {
-  if (!currentCalc || !currentCalc.sale) return;
+  const items = products.filter(p => p.calc);
+  if (items.length === 0) return;
 
-  const name = document.getElementById('inputName').value || '상품명';
-  const qty = document.getElementById('inputQty').value;
   const date = document.getElementById('inputDate').value;
-  const disc = Math.round(currentCalc.sale.totalDiscount * 100);
+  const maxDisc = Math.max(...items.map(p => Math.round(p.calc.totalDiscount * 100)));
 
-  document.getElementById('prevBadge').textContent = disc + '% 할인';
+  document.getElementById('prevBadge').textContent = `최대 ${maxDisc}% 할인`;
   document.getElementById('prevTime').textContent = formatDateKr(date) + ' 오전 9시 ~ 저녁 7시, 단 하루!';
-  document.getElementById('prevName').textContent = name;
-  document.getElementById('prevOriginal').textContent = formatPrice(currentCalc.sellingPrice) + '원';
-  document.getElementById('prevSale').textContent = formatPrice(currentCalc.sale.sellingPrice) + '원';
-  document.getElementById('prevDiscount').textContent = disc + '% 할인';
-  document.getElementById('prevQty').textContent = qty ? '한정수량 ' + qty + '개' : '';
 
+  const productsHtml = items.map(p => {
+    const disc = Math.round(p.calc.totalDiscount * 100);
+    return `
+      <div class="preview-product-item">
+        <div class="preview-product-name">${p.name || '상품명'}</div>
+        <div class="preview-price-row">
+          <span class="preview-original">${formatPrice(p.sellingPrice)}원</span>
+          <span style="color:#ccc;">→</span>
+          <span class="preview-sale">${formatPrice(p.calc.saleSelling)}원</span>
+          <span class="preview-discount">${disc}%</span>
+        </div>
+        ${p.qty ? `<div class="preview-qty">한정 ${p.qty}개</div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('previewProducts').innerHTML = productsHtml;
   document.getElementById('previewSection').classList.add('show');
 }
 
 async function downloadImage() {
-  // html2canvas 동적 로드
   if (!window.html2canvas) {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
@@ -631,10 +660,10 @@ async function downloadImage() {
   }
 
   const card = document.getElementById('previewCard');
-  const canvas = await html2canvas(card, { scale: 2, backgroundColor: '#1a1a1a' });
+  const canvas = await html2canvas(card, { scale: 2, width: 360, height: 567, backgroundColor: '#ffffff' });
   const link = document.createElement('a');
-  const name = document.getElementById('inputName').value || 'timesale';
-  link.download = `타임세일_${name}.png`;
+  const date = document.getElementById('inputDate').value;
+  link.download = `타임세일_${date}.png`;
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
@@ -643,39 +672,30 @@ async function downloadImage() {
 //  저장 & 히스토리
 // ═══════════════════════════════════════
 async function saveTimesale() {
+  const items = products.filter(p => p.calc);
+  if (items.length === 0) return;
+
+  const date = document.getElementById('inputDate').value;
+  const names = items.map(p => p.name).join(', ');
+
   const data = {
-    productCode: document.getElementById('inputCode').value,
-    productName: document.getElementById('inputName').value,
-    purchasePrice: document.getElementById('inputPurchase').value,
-    sellingPrice: document.getElementById('inputSelling').value,
-    quantity: document.getElementById('inputQty').value,
-    saleDate: document.getElementById('inputDate').value,
+    productCode: items.map(p => p.code).join(', '),
+    productName: items.length === 1 ? items[0].name : `${names} (${items.length}종)`,
+    purchasePrice: items[0].purchasePrice,
+    sellingPrice: items[0].sellingPrice,
+    quantity: items.reduce((sum, p) => sum + (p.qty || 0), 0),
+    saleDate: date,
     createdBy: currentUser.id
   };
 
-  const res = await fetch('/api/timesale', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
+  const res = await fetch('/api/timesale', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
   const item = await res.json();
 
-  // 가격 세팅 저장
-  if (currentCalc && currentCalc.sale) {
-    await fetch(`/api/timesale/${item.id}/price`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceSettings: currentCalc.sale })
-    });
-  }
+  const priceSettings = items.map(p => ({ name: p.name, ...p.calc, totalDiscountPct: p.totalDiscount, purchaseDiscount: p.purchaseDiscount, coopMarginPct: p.coopMargin }));
+  await fetch(`/api/timesale/${item.id}/price`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ priceSettings }) });
 
-  // 홍보 문구 저장
-  if (currentCalc && currentCalc.promos) {
-    await fetch(`/api/timesale/${item.id}/promo`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ promoTexts: currentCalc.promos })
-    });
+  if (currentPromos.length > 0) {
+    await fetch(`/api/timesale/${item.id}/promo`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ promoTexts: currentPromos }) });
   }
 
   alert('저장되었습니다!');
@@ -693,11 +713,13 @@ async function loadHistory() {
   }
 
   container.innerHTML = items.map(item => {
-    const disc = item.priceSettings ? Math.round(item.priceSettings.totalDiscount * 100) + '%' : '-';
+    const disc = item.priceSettings && Array.isArray(item.priceSettings)
+      ? Math.max(...item.priceSettings.map(p => Math.round((p.totalDiscount || 0) * 100))) + '%'
+      : item.priceSettings ? Math.round((item.priceSettings.totalDiscount || 0) * 100) + '%' : '-';
     const statusClass = item.status === 'ready' ? 'status-ready' : item.status === 'done' ? 'status-done' : 'status-draft';
     const statusText = item.status === 'ready' ? '준비완료' : item.status === 'done' ? '완료' : '작성중';
     return `
-      <div class="history-item" onclick="loadTimesale(${item.id})">
+      <div class="history-item">
         <div>
           <div class="product-name">${item.productName}</div>
           <div class="meta">${item.saleDate} · ${item.createdBy}</div>
@@ -709,30 +731,6 @@ async function loadHistory() {
       </div>
     `;
   }).join('');
-}
-
-async function loadTimesale(id) {
-  const res = await fetch(`/api/timesale/${id}`);
-  const item = await res.json();
-
-  switchTab('calc');
-  document.getElementById('inputCode').value = item.productCode || '';
-  document.getElementById('inputName').value = item.productName || '';
-  document.getElementById('inputPurchase').value = item.purchasePrice || '';
-  document.getElementById('inputWholesale').value = '';
-  document.getElementById('inputSelling').value = item.sellingPrice || '';
-  autoCalcWholesale();
-  document.getElementById('inputQty').value = item.quantity || '';
-  document.getElementById('inputDate').value = item.saleDate || '';
-
-  calculatePrice();
-
-  if (item.priceSettings) {
-    document.getElementById('sliderTotalDiscount').value = item.priceSettings.totalDiscountPct || 15;
-    document.getElementById('sliderPurchaseDiscount').value = item.priceSettings.purchaseDiscount || 5;
-    document.getElementById('sliderCoopMargin').value = item.priceSettings.coopMarginPct || 16;
-    recalculate();
-  }
 }
 
 // ═══════════════════════════════════════
@@ -759,8 +757,8 @@ function formatDateKr(dateStr) {
   return `${d.getMonth() + 1}/${d.getDate()}(${days[d.getDay()]})`;
 }
 
-function copyText(btn, index) {
-  const text = currentCalc.promos[index].text;
+function copyPromo(index) {
+  const text = currentPromos[index].text;
   navigator.clipboard.writeText(text).then(() => {
     const toast = document.getElementById('copyToast');
     toast.style.display = 'block';
@@ -768,18 +766,15 @@ function copyText(btn, index) {
   });
 }
 
-function resetForm() {
-  document.getElementById('inputCode').value = '';
-  document.getElementById('inputName').value = '';
-  document.getElementById('inputPurchase').value = '';
-  document.getElementById('inputWholesale').value = '';
-  document.getElementById('inputSelling').value = '';
-  document.getElementById('inputQty').value = '';
-  document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
-  document.getElementById('priceResult').classList.remove('show');
+function resetAll() {
+  products = [];
+  nextProductId = 1;
+  currentPromos = [];
+  document.getElementById('resultsSection').classList.remove('show');
   document.getElementById('promoSection').classList.remove('show');
   document.getElementById('previewSection').classList.remove('show');
-  currentCalc = null;
+  document.getElementById('inputDate').value = new Date().toISOString().split('T')[0];
+  addProduct();
 }
 
 // 시작
