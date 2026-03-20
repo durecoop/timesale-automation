@@ -1,0 +1,14 @@
+{
+  "name": "timesale-automation",
+  "version": "1.0.0",
+  "description": "타임세일 가격 자동 계산 & 홍보 자동 생성 도구",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cookie-parser": "^1.4.7"
+  }
+}
