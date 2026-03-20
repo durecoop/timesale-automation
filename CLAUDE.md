@@ -1,9 +1,9 @@
 # 타임세일 자동화 프로그램
 
 ## 팀원 (= 서비스 사용자)
-- 지원: 프로젝트 리더 (디자인/개발)
+- 슬기: 프로젝트 리더 (쇼핑몰 운영)
+- 지원: 팀원 (디자인/개발)
 - 소영: 팀원 (쇼핑몰 운영)
-- 슬기: 팀원 (쇼핑몰 운영)
 
 ## 현재 단계: 니즈 파악 → 기획 → 설계 → 개발
 
@@ -95,7 +95,7 @@ MD에게 타임세일 요청이 들어왔을 때, 가격 세팅부터 홍보 문
 ## 브랜치 규칙
 - main: 완성된 코드만 (직접 수정 금지)
 - feature/이름-작업내용: 각자 작업용 브랜치
-  - 예: feature/jiwon-price-calc, feature/soyoung-promo-text, feature/seulgi-image
+  - 예: feature/seulgi-price-calc, feature/jiwon-promo-image, feature/soyoung-promo-text
 
 ## 커밋 메시지 규칙
 - 한글로 작성
@@ -107,9 +107,9 @@ timesale-automation/
 ├── CLAUDE.md                 ← 이 파일 (팀 규칙)
 ├── docs/                     ← 기획 문서
 │   ├── 요구사항/
-│   │   ├── jiwon.md
-│   │   ├── soyoung.md
-│   │   └── seulgi.md
+│   │   ├── seulgi.md         ← 슬기 니즈 (프로젝트 리더)
+│   │   ├── jiwon.md          ← 지원 니즈
+│   │   └── soyoung.md        ← 소영 니즈
 │   └── 회의록/
 ├── server.js                 ← Express 서버
 ├── database.js               ← JSON DB
