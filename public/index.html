@@ -154,6 +154,66 @@
     .status-done { background: #dbeafe; color: #2563eb; }
     .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-500); }
     .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* ═══ 이미지 붙여넣기 OCR ═══ */
+    .paste-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius); padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px; background: var(--gray-50); position: relative; }
+    .paste-zone:hover, .paste-zone.drag-over { border-color: var(--green); background: var(--green-bg); }
+    .paste-zone .paste-icon { font-size: 28px; margin-bottom: 4px; }
+    .paste-zone .paste-text { font-size: 14px; color: var(--gray-700); font-weight: 600; }
+    .paste-zone .paste-hint { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+    .paste-zone.processing { opacity: 0.7; pointer-events: none; }
+    .paste-progress { margin-top: 12px; display: none; }
+    .paste-progress.show { display: block; }
+    .paste-progress .progress-bar { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+    .paste-progress .progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.3s; width: 0%; }
+    .paste-progress .progress-text { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+    .paste-preview { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; }
+    .paste-preview img { max-width: 200px; max-height: 150px; object-fit: contain; border-radius: 8px; border: 1px solid var(--gray-200); }
+    .paste-preview .ocr-result { flex: 1; text-align: left; font-size: 12px; color: var(--gray-700); background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--gray-200); max-height: 150px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+    .paste-clear { position: absolute; top: 8px; right: 8px; background: var(--gray-200); border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; line-height: 24px; }
+    .paste-clear:hover { background: var(--gray-300); }
+
+    /* ═══ 카드뉴스 ═══ */
+    .cardnews-empty { text-align: center; padding: 60px 20px; color: var(--gray-500); }
+    .cardnews-empty .icon { font-size: 48px; margin-bottom: 12px; }
+    .cardnews-viewer { max-width: 400px; margin: 0 auto; }
+    .cardnews-slide-wrap { position: relative; width: 375px; height: 667px; margin: 0 auto; }
+    .cardnews-slide { width: 375px; height: 667px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-lg); position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .cardnews-slide.active { opacity: 1; pointer-events: auto; }
+    .cn-cover { background: linear-gradient(160deg, #3D6041 0%, #2d4a31 60%, #1a3020 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 30px; }
+    .cn-cover .cn-badge { display: inline-block; background: #C75A3A; padding: 6px 20px; border-radius: 24px; font-size: 14px; font-weight: 700; margin-bottom: 20px; letter-spacing: 2px; }
+    .cn-cover .cn-title { font-size: 36px; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+    .cn-cover .cn-subtitle { font-size: 16px; opacity: 0.85; margin-bottom: 32px; line-height: 1.5; }
+    .cn-cover .cn-time { background: rgba(255,255,255,0.15); padding: 12px 24px; border-radius: 12px; font-size: 15px; }
+    .cn-cover .cn-logo { margin-top: 40px; font-size: 14px; opacity: 0.6; }
+    .cn-product { background: #fff; display: flex; flex-direction: column; }
+    .cn-product .cn-prod-header { background: linear-gradient(135deg, #3D6041, #2d4a31); color: #fff; padding: 20px 24px; text-align: center; }
+    .cn-product .cn-prod-header .cn-prod-num { font-size: 13px; opacity: 0.8; margin-bottom: 4px; }
+    .cn-product .cn-prod-header .cn-prod-name { font-size: 24px; font-weight: 800; }
+    .cn-product .cn-prod-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; gap: 24px; }
+    .cn-product .cn-disc-circle { width: 120px; height: 120px; border-radius: 50%; background: #C75A3A; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .cn-product .cn-disc-circle .cn-disc-num { font-size: 42px; font-weight: 900; line-height: 1; }
+    .cn-product .cn-disc-circle .cn-disc-label { font-size: 14px; font-weight: 600; }
+    .cn-product .cn-price-info { text-align: center; }
+    .cn-product .cn-price-original { font-size: 18px; color: var(--gray-500); text-decoration: line-through; margin-bottom: 4px; }
+    .cn-product .cn-price-sale { font-size: 32px; font-weight: 900; color: #C75A3A; }
+    .cn-product .cn-qty { font-size: 15px; color: var(--gray-500); margin-top: 8px; }
+    .cn-product .cn-prod-footer { background: var(--green-bg); padding: 16px; text-align: center; font-size: 13px; color: var(--green); font-weight: 600; }
+    .cn-closing { background: linear-gradient(160deg, #3D6041 0%, #2d4a31 60%, #1a3020 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 30px; }
+    .cn-closing .cn-closing-title { font-size: 28px; font-weight: 800; margin-bottom: 24px; }
+    .cn-closing .cn-closing-info { background: rgba(255,255,255,0.12); border-radius: 16px; padding: 24px; margin-bottom: 24px; width: 100%; }
+    .cn-closing .cn-closing-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 16px; }
+    .cn-closing .cn-closing-icon { font-size: 20px; }
+    .cn-closing .cn-closing-cta { background: #C75A3A; color: #fff; padding: 14px 32px; border-radius: 30px; font-size: 18px; font-weight: 700; margin-top: 8px; }
+    .cn-closing .cn-logo { margin-top: 32px; font-size: 14px; opacity: 0.6; }
+    .cardnews-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+    .cardnews-nav button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gray-300); background: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .cardnews-nav button:hover { background: var(--gray-100); }
+    .cardnews-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+    .cardnews-dots { display: flex; gap: 6px; }
+    .cardnews-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-300); transition: all 0.2s; }
+    .cardnews-dot.active { background: var(--green); width: 20px; border-radius: 4px; }
+    .cardnews-page-info { font-size: 13px; color: var(--gray-500); text-align: center; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -181,6 +241,7 @@
   <div class="main">
     <div class="tabs">
       <button class="tab active" data-tab="calc" onclick="switchTab('calc')">가격 계산</button>
+      <button class="tab" data-tab="cardnews" onclick="switchTab('cardnews')">카드뉴스</button>
       <button class="tab" data-tab="history" onclick="switchTab('history')">이전 기록</button>
     </div>
 
@@ -190,6 +251,22 @@
         <div class="card-title">
           <span>상품 정보 입력 (최대 6개)</span>
           <span id="productCount" style="font-size:13px; color:var(--gray-500); font-weight:500;">0 / 6</span>
+        </div>
+
+        <!-- 이미지 붙여넣기 OCR -->
+        <div class="paste-zone" id="pasteZone"
+             ondragover="event.preventDefault(); this.classList.add('drag-over')"
+             ondragleave="this.classList.remove('drag-over')"
+             ondrop="event.preventDefault(); this.classList.remove('drag-over'); handleImageDrop(event)">
+          <div class="paste-icon">📋</div>
+          <div class="paste-text">이미지를 붙여넣거나 드래그하세요</div>
+          <div class="paste-hint">Ctrl+V로 상품 정보 이미지를 붙여넣으면 자동으로 입력됩니다</div>
+          <div class="paste-progress" id="pasteProgress">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" id="progressText">OCR 처리 중...</div>
+          </div>
+          <div class="paste-preview" id="pastePreview" style="display:none;"></div>
+          <button class="paste-clear" id="pasteClear" style="display:none;" onclick="clearPaste(event)">✕</button>
         </div>
 
         <!-- 상품 목록 -->
@@ -281,6 +358,40 @@
       </div>
     </div>
 
+    <!-- ═══ 카드뉴스 탭 ═══ -->
+    <div id="tab-cardnews" style="display:none;">
+      <div class="card">
+        <div class="card-title">
+          <span>모바일 카드뉴스</span>
+          <span style="font-size:13px; color:var(--gray-500); font-weight:400;">375 x 667px (모바일 최적화)</span>
+        </div>
+
+        <div id="cardnewsContent">
+          <div class="cardnews-empty">
+            <div class="icon">📰</div>
+            <div>가격 계산 탭에서 먼저 상품을 계산해주세요</div>
+            <div style="margin-top:8px; font-size:13px;">계산된 상품 정보로 카드뉴스를 자동 생성합니다</div>
+          </div>
+        </div>
+
+        <div id="cardnewsViewer" style="display:none;">
+          <div class="cardnews-viewer">
+            <div class="cardnews-slide-wrap" id="cardnewsSlides"></div>
+            <div class="cardnews-nav">
+              <button onclick="navigateCard(-1)" id="cnPrev">&#8249;</button>
+              <div class="cardnews-dots" id="cardnewsDots"></div>
+              <button onclick="navigateCard(1)" id="cnNext">&#8250;</button>
+            </div>
+            <div class="cardnews-page-info" id="cnPageInfo"></div>
+          </div>
+          <div class="btn-group" style="justify-content: center; margin-top: 16px;">
+            <button class="btn btn-primary" onclick="downloadCurrentCard()">현재 페이지 다운로드</button>
+            <button class="btn btn-secondary" onclick="downloadAllCards()">전체 다운로드</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ 이전 기록 탭 ═══ -->
     <div id="tab-history" style="display:none;">
       <div class="card">
@@ -362,8 +473,169 @@ function showApp() {
 function switchTab(tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
   document.getElementById('tab-calc').style.display = tabName === 'calc' ? 'block' : 'none';
+  document.getElementById('tab-cardnews').style.display = tabName === 'cardnews' ? 'block' : 'none';
   document.getElementById('tab-history').style.display = tabName === 'history' ? 'block' : 'none';
   if (tabName === 'history') loadHistory();
+  if (tabName === 'cardnews') generateCardNews();
+}
+
+// ═══════════════════════════════════════
+//  이미지 붙여넣기 OCR
+// ═══════════════════════════════════════
+let tesseractLoaded = false;
+
+document.addEventListener('paste', function(e) {
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      const file = item.getAsFile();
+      processImage(file);
+      return;
+    }
+  }
+});
+
+function handleImageDrop(e) {
+  const files = e.dataTransfer.files;
+  if (files.length > 0 && files[0].type.startsWith('image/')) {
+    processImage(files[0]);
+  }
+}
+
+async function loadTesseract() {
+  if (tesseractLoaded) return;
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+  document.head.appendChild(script);
+  await new Promise((resolve, reject) => { script.onload = resolve; script.onerror = reject; });
+  tesseractLoaded = true;
+}
+
+async function processImage(file) {
+  const zone = document.getElementById('pasteZone');
+  const progress = document.getElementById('pasteProgress');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const preview = document.getElementById('pastePreview');
+  const clearBtn = document.getElementById('pasteClear');
+
+  // 이미지 미리보기
+  const imgUrl = URL.createObjectURL(file);
+  preview.style.display = 'flex';
+  preview.innerHTML = `<img src="${imgUrl}" alt="붙여넣은 이미지"><div class="ocr-result" id="ocrResult">인식 중...</div>`;
+  clearBtn.style.display = 'block';
+
+  zone.classList.add('processing');
+  progress.classList.add('show');
+  progressFill.style.width = '10%';
+  progressText.textContent = 'OCR 엔진 로딩 중...';
+
+  try {
+    await loadTesseract();
+    progressFill.style.width = '30%';
+    progressText.textContent = '한국어 인식 중... (처음엔 시간이 걸릴 수 있습니다)';
+
+    const result = await Tesseract.recognize(file, 'kor', {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          const pct = Math.round(30 + m.progress * 60);
+          progressFill.style.width = pct + '%';
+          progressText.textContent = `텍스트 인식 중... ${Math.round(m.progress * 100)}%`;
+        }
+      }
+    });
+
+    progressFill.style.width = '95%';
+    progressText.textContent = '상품 정보 추출 중...';
+
+    const text = result.data.text;
+    document.getElementById('ocrResult').textContent = text || '(인식된 텍스트 없음)';
+
+    // 상품 정보 파싱
+    const parsed = parseOCRResult(text);
+    if (parsed.length > 0) {
+      applyOCRProducts(parsed);
+      progressText.textContent = `${parsed.length}개 상품 정보를 입력했습니다!`;
+    } else {
+      progressText.textContent = '상품 정보를 찾지 못했습니다. 직접 입력해주세요.';
+    }
+
+    progressFill.style.width = '100%';
+  } catch (err) {
+    progressText.textContent = 'OCR 처리 실패: ' + err.message;
+  }
+
+  zone.classList.remove('processing');
+  setTimeout(() => progress.classList.remove('show'), 3000);
+}
+
+function parseOCRResult(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const products = [];
+
+  // 숫자 패턴 (쉼표 포함 가격)
+  const priceRegex = /[\d,]+/g;
+  // 상품코드 (4~6자리 숫자)
+  const codeRegex = /\b(\d{4,6})\b/;
+
+  for (const line of lines) {
+    // 가격이 2개 이상 포함된 줄은 상품 정보일 가능성 높음
+    const prices = line.match(priceRegex);
+    const numericPrices = prices ? prices.map(p => parseInt(p.replace(/,/g, ''))).filter(n => n >= 100) : [];
+
+    if (numericPrices.length >= 2) {
+      const codeMatch = line.match(codeRegex);
+      // 한글 부분 추출 (상품명)
+      const koreanParts = line.match(/[가-힣][가-힣a-zA-Z0-9()（）\s\-_.×xX\/]+/g);
+      const name = koreanParts ? koreanParts.sort((a, b) => b.length - a.length)[0].trim() : '';
+
+      // 가격 정렬: 입고가 < 조합원가
+      numericPrices.sort((a, b) => a - b);
+
+      const product = {
+        code: codeMatch ? codeMatch[1] : '',
+        name: name,
+        purchasePrice: numericPrices[0] || 0,
+        sellingPrice: numericPrices.length >= 2 ? numericPrices[numericPrices.length - 1] : 0
+      };
+
+      if (product.name && product.purchasePrice > 0) {
+        products.push(product);
+      }
+    }
+  }
+
+  // 중복 제거 및 최대 6개
+  return products.slice(0, 6);
+}
+
+function applyOCRProducts(parsed) {
+  // 기존 빈 상품 제거 후 새로 추가
+  products = [];
+  nextProductId = 1;
+
+  parsed.forEach(p => {
+    const id = nextProductId++;
+    products.push({
+      id, code: p.code, name: p.name,
+      purchasePrice: p.purchasePrice,
+      wholesalePrice: p.sellingPrice ? Math.round(p.sellingPrice * 0.74) : 0,
+      sellingPrice: p.sellingPrice,
+      qty: 0, totalDiscount: 15, purchaseDiscount: 5, coopMargin: 16, calc: null
+    });
+  });
+
+  renderProductList();
+}
+
+function clearPaste(e) {
+  e.stopPropagation();
+  document.getElementById('pastePreview').style.display = 'none';
+  document.getElementById('pastePreview').innerHTML = '';
+  document.getElementById('pasteClear').style.display = 'none';
+  document.getElementById('pasteProgress').classList.remove('show');
 }
 
 // ═══════════════════════════════════════
@@ -561,22 +833,22 @@ function recalculateAll() {
 //  홍보 문구 생성 (100자 이내 엄수)
 // ═══════════════════════════════════════
 
-// 시즌/유행 문구 풀 (월별)
+// 시즌/유행 문구 풀 (월별) - 50~60대 여성 + 생협 톤
 function getSeasonCopy(date) {
   const month = new Date(date).getMonth() + 1;
   const pool = {
-    1:  ['새해 건강한 식탁', '겨울 보양식 특가', '신년맞이 알뜰 장보기'],
-    2:  ['설 명절 후 알뜰 특가', '겨울 끝자락 보양 특가', '입춘맞이 건강 식탁'],
-    3:  ['미세먼지 이기는 건강 식탁', '봄맞이 청정 먹거리 특가', '환절기 면역력 챙기세요'],
-    4:  ['봄나들이 간식 특가', '싱그러운 봄 식탁 준비', '벚꽃 시즌 특별 할인'],
-    5:  ['가정의 달 감사 특가', '초여름 입맛 살리기', '어버이날 건강 선물'],
-    6:  ['여름 준비 시원한 특가', '장마철 든든한 식탁', '무더위 이기는 보양 특가'],
-    7:  ['한여름 시원한 먹거리', '무더위 극복 건강 식탁', '여름 휴가 전 알뜰 장보기'],
-    8:  ['늦여름 건강 챙기세요', '가을 준비 알뜰 특가', '처서맞이 보양 식탁'],
-    9:  ['가을 식탁 풍성하게', '추석 준비 알뜰 특가', '선선한 가을 건강 식탁'],
-    10: ['가을 제철 먹거리 특가', '환절기 건강 챙기세요', '단풍 시즌 알뜰 장보기'],
-    11: ['겨울 준비 든든한 특가', '김장철 알뜰 장보기', '초겨울 따뜻한 식탁'],
-    12: ['연말 감사 특가', '겨울 보양식 특가', '크리스마스 특별 할인']
+    1:  ['새해 건강 식탁 차려요', '겨울 보양 먹거리 준비하세요', '온 가족 건강 챙기는 새해'],
+    2:  ['명절 후 알뜰하게 장봐요', '입춘, 건강한 봄 식탁 준비', '겨울 끝, 기운 나는 보양식'],
+    3:  ['환절기 건강 챙기세요', '봄맞이 안심 먹거리', '우리 가족 면역력 식탁'],
+    4:  ['싱그러운 봄, 건강한 밥상', '봄 제철 안심 먹거리', '가족과 함께하는 봄 식탁'],
+    5:  ['감사한 마음 건강한 선물', '가정의 달 정성 가득 식탁', '우리 부모님께 건강 먹거리'],
+    6:  ['장마철 든든한 밥상', '여름 건강 미리 챙기세요', '온 가족 기운 나는 보양식'],
+    7:  ['무더위 이기는 건강 식탁', '시원하고 든든한 여름 먹거리', '여름철 안심 먹거리'],
+    8:  ['늦더위 건강 꼭 챙기세요', '가을맞이 알뜰 장보기', '기운 나는 보양 식탁'],
+    9:  ['풍성한 가을 건강 밥상', '추석 준비 알뜰하게', '가을 제철 안심 먹거리'],
+    10: ['가을 제철 건강 식탁', '환절기 가족 건강 챙기세요', '든든한 가을 밥상 준비'],
+    11: ['김장철 알뜰 장보기', '겨울 준비 따뜻한 식탁', '초겨울 기운 나는 먹거리'],
+    12: ['한 해 감사 건강한 식탁', '겨울 보양 먹거리', '따뜻한 연말 가족 밥상']
   };
   const copies = pool[month] || pool[3];
   return copies[Math.floor(Math.random() * copies.length)];
@@ -621,30 +893,28 @@ function generatePromo() {
     const origPrice = formatPrice(p.sellingPrice);
 
     promos = [
-      `🔥[두레생협] ${season}!\n✨${p.name}\n💰${origPrice}→${salePrice}원(${disc}%↓)\n⏰${dateStr} 9~19시 단하루`,
-      `🎁[두레생협] ${dateStr} 단하루!\n${p.name} ${disc}%할인\n💰${origPrice}→${salePrice}원\n🌿${season}`,
-      `✨[두레생협] 수요특가\n${p.name} ${disc}%↓\n💰${salePrice}원 ⏰9~19시\n🌱${season}`,
+      `[두레생협] 조합원님, ${season}\n${p.name}\n${origPrice}→${salePrice}원(${disc}%할인)\n${dateStr} 오전9시~저녁7시`,
+      `[두레생협] ${dateStr} 하루특가\n조합원님께 드리는 안심 먹거리\n${p.name} ${disc}%할인 ${salePrice}원\n${season}`,
+      `[두레생협] ${season}\n${p.name} ${disc}%할인\n${origPrice}→${salePrice}원\n${dateStr} 9~19시 하루`,
     ];
   } else {
     const nameList = fitNames(items, 30);
 
     promos = [
-      `🔥[두레생협] ${season}!\n✨${nameList}\n💰최대 ${maxDisc}%할인 ⏰${dateStr} 9~19시\n🛒단하루, 서두르세요!`,
-      `🎁[두레생협] ${dateStr} 특가!\n${nameList} 최대${maxDisc}%↓\n🌿${season}\n⏰9~19시 단하루`,
-      `✨[두레생협] 수요특가\n${nameList}\n💰최대 ${maxDisc}%할인\n🌱${season}\n⏰${dateStr} 9~19시`,
+      `[두레생협] 조합원님, ${season}\n${nameList}\n최대 ${maxDisc}%할인\n${dateStr} 오전9시~저녁7시`,
+      `[두레생협] ${dateStr} 하루특가\n조합원님께 드리는 안심 먹거리\n${nameList} 최대${maxDisc}%할인\n${season}`,
+      `[두레생협] ${season}\n${nameList} 최대${maxDisc}%할인\n${dateStr} 9~19시 하루\n조합원님 서둘러 주세요`,
     ];
   }
 
-  // 100자 초과 안전장치: 초과 시 뒤에서 자르기
+  // 100자 초과 안전장치
   promos = promos.map(text => {
     if (charLen(text) > 100) {
-      // 줄 단위로 줄여나감
       let lines = text.split('\n');
       while (charLen(lines.join('\n')) > 100 && lines.length > 2) {
         lines.pop();
       }
       text = lines.join('\n');
-      // 그래도 넘으면 마지막 줄 잘라냄
       while (charLen(text) > 100) {
         text = text.slice(0, -1);
       }
@@ -655,16 +925,16 @@ function generatePromo() {
   // 앱 푸시 (50자 이내)
   let pushText;
   if (items.length === 1) {
-    pushText = `🔥${items[0].name} ${Math.round(items[0].calc.totalDiscount*100)}%특가 ⏰9~19시`;
+    pushText = `${items[0].name} ${Math.round(items[0].calc.totalDiscount*100)}%할인 9~19시`;
   } else {
-    pushText = `🔥${fitNames(items, 20)} 최대${maxDisc}%특가 ⏰9~19시`;
+    pushText = `${fitNames(items, 20)} 최대${maxDisc}%할인 9~19시`;
   }
   if (pushText.length > 50) pushText = pushText.slice(0, 50);
 
-  // 쇼핑몰 팝업
-  let popupText = `🔥오늘의 특판🔥\n${fitNames(items, 30)}\n💰최대 ${maxDisc}%할인\n⏰9시~19시`;
+  // 쇼핑몰 팝업 (생협 톤)
+  let popupText = `조합원님을 위한 하루특가\n${fitNames(items, 30)}\n최대 ${maxDisc}%할인\n오전9시~저녁7시`;
   if (charLen(popupText) > 100) {
-    popupText = `🔥오늘의 특판🔥\n${fitNames(items, 20)} 최대${maxDisc}%↓\n⏰9~19시`;
+    popupText = `하루특가\n${fitNames(items, 22)} 최대${maxDisc}%할인\n9~19시`;
   }
 
   const allPromos = [
@@ -728,13 +998,7 @@ function generatePreview() {
 }
 
 async function downloadImage() {
-  if (!window.html2canvas) {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    document.head.appendChild(script);
-    await new Promise(resolve => script.onload = resolve);
-  }
-
+  await ensureHtml2Canvas();
   const card = document.getElementById('previewCard');
   const canvas = await html2canvas(card, { scale: 2, width: 360, height: 567, backgroundColor: '#ffffff' });
   const link = document.createElement('a');
@@ -807,6 +1071,159 @@ async function loadHistory() {
       </div>
     `;
   }).join('');
+}
+
+// ═══════════════════════════════════════
+//  카드뉴스
+// ═══════════════════════════════════════
+let cnCurrentPage = 0;
+let cnTotalPages = 0;
+
+function generateCardNews() {
+  const items = products.filter(p => p.calc);
+  if (items.length === 0) {
+    document.getElementById('cardnewsContent').style.display = 'block';
+    document.getElementById('cardnewsViewer').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('cardnewsContent').style.display = 'none';
+  document.getElementById('cardnewsViewer').style.display = 'block';
+
+  const date = document.getElementById('inputDate').value;
+  const dateStr = formatDateKr(date);
+  const maxDisc = Math.max(...items.map(p => Math.round(p.calc.totalDiscount * 100)));
+  const season = getSeasonCopy(date);
+
+  let slides = [];
+
+  // 1. 표지
+  slides.push(`
+    <div class="cardnews-slide cn-cover" data-cn-idx="0">
+      <div class="cn-badge">하루특가</div>
+      <div class="cn-title">오늘의<br>솔직한 특판</div>
+      <div class="cn-subtitle">${season}<br>조합원님만을 위한 특별 할인</div>
+      <div class="cn-time">${dateStr} 오전 9시 ~ 저녁 7시</div>
+      <div style="margin-top:20px; font-size:48px;">🌿</div>
+      <div class="cn-logo">두레생협 | 사람과 자연을 잇는 먹거리</div>
+    </div>
+  `);
+
+  // 2. 상품별 카드
+  items.forEach((p, i) => {
+    const disc = Math.round(p.calc.totalDiscount * 100);
+    slides.push(`
+      <div class="cardnews-slide cn-product" data-cn-idx="${i + 1}">
+        <div class="cn-prod-header">
+          <div class="cn-prod-num">ITEM ${i + 1}</div>
+          <div class="cn-prod-name">${p.name || '상품명'}</div>
+        </div>
+        <div class="cn-prod-body">
+          <div class="cn-disc-circle">
+            <div class="cn-disc-num">${disc}%</div>
+            <div class="cn-disc-label">할인</div>
+          </div>
+          <div class="cn-price-info">
+            <div class="cn-price-original">${formatPrice(p.sellingPrice)}원</div>
+            <div class="cn-price-sale">${formatPrice(p.calc.saleSelling)}원</div>
+          </div>
+          ${p.qty ? `<div class="cn-qty">한정 ${p.qty}개 · 선착순 마감</div>` : '<div class="cn-qty">한정수량 · 선착순 마감</div>'}
+        </div>
+        <div class="cn-prod-footer">🌿 두레생협이 엄선한 안심 먹거리</div>
+      </div>
+    `);
+  });
+
+  // 3. 마무리
+  slides.push(`
+    <div class="cardnews-slide cn-closing" data-cn-idx="${items.length + 1}">
+      <div class="cn-closing-title">지금 바로<br>만나보세요!</div>
+      <div class="cn-closing-info">
+        <div class="cn-closing-row"><span class="cn-closing-icon">📅</span> ${dateStr} 단 하루!</div>
+        <div class="cn-closing-row"><span class="cn-closing-icon">⏰</span> 오전 9시 ~ 저녁 7시</div>
+        <div class="cn-closing-row"><span class="cn-closing-icon">📱</span> 두레생협 앱 · 쇼핑몰</div>
+        <div class="cn-closing-row"><span class="cn-closing-icon">🌿</span> 최대 ${maxDisc}% 할인</div>
+      </div>
+      <div class="cn-closing-cta">지금 쇼핑하기</div>
+      <div class="cn-logo">두레생협 | 사람과 자연을 잇는 먹거리</div>
+    </div>
+  `);
+
+  cnTotalPages = slides.length;
+  cnCurrentPage = 0;
+
+  document.getElementById('cardnewsSlides').innerHTML = slides.join('');
+  document.getElementById('cardnewsDots').innerHTML = slides.map((_, i) =>
+    `<div class="cardnews-dot${i === 0 ? ' active' : ''}" onclick="goToCard(${i})"></div>`
+  ).join('');
+
+  updateCardNav();
+}
+
+function navigateCard(dir) {
+  const next = cnCurrentPage + dir;
+  if (next < 0 || next >= cnTotalPages) return;
+  goToCard(next);
+}
+
+function goToCard(idx) {
+  cnCurrentPage = idx;
+  document.querySelectorAll('.cardnews-slide').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.cardnews-dot').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  updateCardNav();
+}
+
+function updateCardNav() {
+  document.getElementById('cnPrev').disabled = cnCurrentPage === 0;
+  document.getElementById('cnNext').disabled = cnCurrentPage === cnTotalPages - 1;
+  document.getElementById('cnPageInfo').textContent = `${cnCurrentPage + 1} / ${cnTotalPages}`;
+}
+
+async function ensureHtml2Canvas() {
+  if (!window.html2canvas) {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    document.head.appendChild(script);
+    await new Promise(resolve => script.onload = resolve);
+  }
+}
+
+async function downloadCurrentCard() {
+  await ensureHtml2Canvas();
+  const slide = document.querySelector('.cardnews-slide.active');
+  if (!slide) return;
+  const canvas = await html2canvas(slide, { scale: 2, width: 375, height: 667, backgroundColor: null });
+  const link = document.createElement('a');
+  const date = document.getElementById('inputDate').value;
+  link.download = `카드뉴스_${date}_${cnCurrentPage + 1}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+async function downloadAllCards() {
+  await ensureHtml2Canvas();
+  const slides = document.querySelectorAll('.cardnews-slide');
+  const date = document.getElementById('inputDate').value;
+
+  for (let i = 0; i < slides.length; i++) {
+    // 잠시 보이게 해서 캡처
+    slides.forEach((s, j) => s.classList.toggle('active', j === i));
+    await new Promise(r => setTimeout(r, 100));
+
+    const canvas = await html2canvas(slides[i], { scale: 2, width: 375, height: 667, backgroundColor: null });
+    const link = document.createElement('a');
+    link.download = `카드뉴스_${date}_${i + 1}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  // 원래 페이지로 복원
+  goToCard(cnCurrentPage);
 }
 
 // ═══════════════════════════════════════
